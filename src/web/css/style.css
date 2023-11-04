@@ -1,0 +1,27 @@
+#toggleMancha1 {
+    position: absolute;
+    z-index: 1000; /* Valor alto para estar por encima de otros elementos */
+    top: 1rem;
+    left: 10rem
+}
+
+#toggleMancha2 {
+    position: absolute;
+    z-index: 1000; /* Valor alto para estar por encima de otros elementos */
+    top: 3rem;
+    left: 10rem
+}
+
+#toggleMancha3 {
+    position: absolute;
+    z-index: 1000; /* Valor alto para estar por encima de otros elementos */
+    top: 5rem;
+    left: 10rem
+}
+
+#toggleMunicipio {
+    position: absolute;
+    z-index: 1000; /* Valor alto para estar por encima de otros elementos */
+    top: 7rem;
+    left: 10rem
+}
