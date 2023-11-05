@@ -1,3 +1,10 @@
+<?php
+// require 'start.php';
+
+// use Controllers\Users; // Importamos el controlador Users
+// $user = Users::create_user("Lola"); // Creamos un usuario
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
