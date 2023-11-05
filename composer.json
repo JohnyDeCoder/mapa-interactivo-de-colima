@@ -1,0 +1,17 @@
+{
+  "require": {
+    "doctrine/orm": "^2.16",
+    "doctrine/dbal": "^3.2",
+    "symfony/yaml": "^5.4",
+    "symfony/cache": "^5.4",
+    "vlucas/phpdotenv": "^5.5"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}
