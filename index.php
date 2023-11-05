@@ -1,8 +1,10 @@
 <?php
-// require 'start.php';
+ // Cargamos la configuración de Eloquent ORM
+require 'start.php';
 
 // use Controllers\Users; // Importamos el controlador Users
 // $user = Users::create_user("Lola"); // Creamos un usuario
+// echo $user->name; // Imprimimos el nombre del usuario
 ?>
 
 <!DOCTYPE html>
