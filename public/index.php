@@ -1,6 +1,6 @@
 <?php
  // Cargamos la configuración de Eloquent ORM
-require 'start.php';
+require __DIR__ . '/../start.php';
 
 // use Controllers\Users; // Importamos el controlador Users
 // $user = Users::create_user("Lola"); // Creamos un usuario
@@ -17,7 +17,7 @@ require 'start.php';
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Mapa Interactivo de Colima</title>
 </head>
 
@@ -40,7 +40,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <img src="../assets/img/educacion.png" alt="Educacion" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/educacion.png" alt="Educacion" style="margin-right: 3%; width: 15%" />
           Educación
         </button>
       </h2>
@@ -148,7 +148,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHealth" aria-expanded="true" aria-controls="collapseHealth">
-          <img src="../assets/img/salud.png" alt="Salud" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/salud.png" alt="Salud" style="margin-right: 3%; width: 15%" />
           Salud
         </button>
       </h2>
@@ -256,7 +256,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWork" aria-expanded="true" aria-controls="collapseWork">
-          <img src="../assets/img/trabajo.png" alt="Trabajo" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/trabajo.png" alt="Trabajo" style="margin-right: 3%; width: 15%" />
           Trabajo
         </button>
       </h2>
@@ -363,7 +363,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePoblation" aria-expanded="true" aria-controls="collapsePoblation">
-          <img src="../assets/img/poblacion.png" alt="Población" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/poblacion.png" alt="Población" style="margin-right: 3%; width: 15%" />
           Población
         </button>
       </h2>
@@ -470,7 +470,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEconomy" aria-expanded="true" aria-controls="collapseEconomy">
-          <img src="../assets/img/economia.png" alt="Economía" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/economia.png" alt="Economía" style="margin-right: 3%; width: 15%" />
           Economía
         </button>
       </h2>
@@ -577,7 +577,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSecurity" aria-expanded="true" aria-controls="collapseSecurity">
-          <img src="../assets/img/seguridad.png" alt="Seguridad" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/seguridad.png" alt="Seguridad" style="margin-right: 3%; width: 15%" />
           Seguridad
         </button>
       </h2>
@@ -684,7 +684,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGovernment" aria-expanded="true" aria-controls="collapseGovernment">
-          <img src="../assets/img/gobierno.png" alt="Gobierno" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/gobierno.png" alt="Gobierno" style="margin-right: 3%; width: 15%" />
           Gobierno
         </button>
       </h2>
@@ -791,7 +791,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLivingPlace" aria-expanded="true" aria-controls="collapseLivingPlace">
-          <img src="../assets/img/vivienda.png" alt="vivienda" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/vivienda.png" alt="vivienda" style="margin-right: 3%; width: 15%" />
           Vivienda
         </button>
       </h2>
@@ -898,7 +898,7 @@ require 'start.php';
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQOL" aria-expanded="true" aria-controls="collapseQOL">
-          <img src="../assets/img/calidad de vida.png" alt="Calidad de vida" style="margin-right: 3%; width: 15%" />
+          <img src="./assets/img/calidad de vida.png" alt="Calidad de vida" style="margin-right: 3%; width: 15%" />
           Calidad de vida
         </button>
       </h2>
@@ -1015,7 +1015,7 @@ require 'start.php';
 
   <!-- Agrega el script para cargar y mostrar los polígonos -->
   <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
-  <script src="../assets/js/mapa.js"></script>
+  <script src="./assets/js/mapa.js"></script>
 </body>
 
 </html>
