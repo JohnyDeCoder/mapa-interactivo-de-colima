@@ -4,8 +4,10 @@
 require_once 'vendor/autoload.php';
 
 // Carga las variables de entorno
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/');
-$dotenv->load();
+if (file_exists(__DIR__ . '/.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}
 
 // Configuración de la conexión a la base de datos
 return [

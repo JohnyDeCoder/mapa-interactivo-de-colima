@@ -1,6 +1,6 @@
 <?php
 // Cargamos la configuración de Eloquent ORM
-require __DIR__ . '/../start.php';
+require __DIR__ . 'start.php';
 
 // use Controllers\Users; // Importamos el controlador Users
 // $user = Users::create_user("Lola"); // Creamos un usuario
