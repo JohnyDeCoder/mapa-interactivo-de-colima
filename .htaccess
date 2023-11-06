@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} ^/index\.php$
+RewriteRule ^(.*)$ /web/$1 [R=301,L]

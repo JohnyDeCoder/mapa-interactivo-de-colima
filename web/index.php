@@ -1,5 +1,5 @@
 <?php
- // Cargamos la configuración de Eloquent ORM
+// Cargamos la configuración de Eloquent ORM
 require __DIR__ . '/../start.php';
 
 // use Controllers\Users; // Importamos el controlador Users
