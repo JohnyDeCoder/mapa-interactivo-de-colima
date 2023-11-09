@@ -9,73 +9,60 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-// Carga el archivo KML que contiene los polígonos
-fetch("Pruebas1.kml")
-  .then((response) => response.text())
-  .then((kml) => {
-    // Convierte el KML en una capa de polígonos en Leaflet
-    var polygons = omnivore.kml.parse(kml);
-
-    // Define un objeto que mapea nombres de polígonos a colores
-    var colorMapping = {
-      "Mancha 1": "red",
-      "Mancha 2": "green",
-      "Mancha 3": "blue",
-    };
-
-    // Aplica el estilo personalizado basado en la categoría
-    polygons.setStyle(function (feature) {
-      var nombre = feature.properties.name;
-      var fillColor = colorMapping[nombre] || "rgb(0,0,0,0)"; // Borde del mapa
-
-      return {
-        fillColor: fillColor,
-        color: "black",
-        weight: 2,
-        opacity: 1,
-        fillOpacity: 0.5,
-      };
-    });
-
-    // Función para habilitar/deshabilitar un polígono
-    function togglePolygon(polygonName) {
-      if (polygons) {
-        polygons.eachLayer(function (layer) {
-          if (layer.feature.properties.name === polygonName) {
-            if (map.hasLayer(layer)) {
-              map.removeLayer(layer);
-            } else {
-              map.addLayer(layer);
-            }
-          }
-        });
-      }
+/* El código `var control = L.Control.geocoder({...}).addTo(map);` está creando un control
+geocodificador y agregándolo al mapa del Folleto. */
+var control = L.Control.geocoder({
+  position: "topleft",
+  defaultMarkGeocode: true,
+  geocoder: L.Control.Geocoder.mapbox(
+    "pk.eyJ1Ijoic3Bpbm9uNjQiLCJhIjoiY2xvbjgwbmlqMHFmcDJrczZncGs1ejRnNCJ9._i-bNrmSZgkTubn6s64-cw",
+    {
+      proximity: L.latLng(19.2433, -103.7242), // Centro de Colima
     }
+  ),
+}).addTo(map);
 
-    // Agregar eventos de clic a los botones
-    document
-      .getElementById("toggleMancha1")
-      .addEventListener("click", function () {
-        togglePolygon("0600200011091");
-      });
+/* El código `control.on('markgeocode', function (e) { map.setView(e.geocode.center, 15); });` está
+agregando un detector de eventos al control del geocodificador. */
+control.on("markgeocode", function (e) {
+  map.setView(e.geocode.center, 15);
+});
 
-    document
-      .getElementById("toggleMancha2")
-      .addEventListener("click", function () {
-        togglePolygon("Mancha 2");
-      });
+// Carga el archivo GeoJSON que contiene los polígonos
+fetch("agebs.json") // Reemplaza 'Pruebas1.geojson' con la URL de tu archivo GeoJSON
+  .then((response) => response.json()) // Utiliza response.json() para analizar el archivo GeoJSON
+  .then((data) => {
+    // Convierte el GeoJSON en una capa de polígonos en Leaflet
+    var polygons = L.geoJSON(data, {
+      style: function (feature) {
+        var POBTOT = feature.properties.POBTOT;
+        var nombre = feature.properties.name;
+        var fillColor;
 
-    document
-      .getElementById("toggleMancha3")
-      .addEventListener("click", function () {
-        togglePolygon("Mancha 3");
-      });
+        // Define el color basado en el valor de "POBTOT"
+        if (nombre === "Municipio Colima") {
+          fillColor = "transparent"; // Establece el relleno como transparente
+        }
 
-    document
-      .getElementById("toggleMunicipio")
-      .addEventListener("click", function () {
-        togglePolygon("Municipio Colima");
-      });
+        if (POBTOT === 3 && nombre === "060020001134A") {
+          fillColor = "black";
+        }
+
+        if (POBTOT <= 10) {
+          fillColor = "purple";
+        } else if (POBTOT <= 30 && POBTOT >= 11) {
+          fillColor = "green";
+        }
+
+        return {
+          fillColor: fillColor,
+          color: "blue",
+          weight: 0.5,
+          opacity: 1,
+          fillOpacity: 0.5,
+        };
+      },
+    });
 
     // Agrega los polígonos al mapa
     polygons.addTo(map);
