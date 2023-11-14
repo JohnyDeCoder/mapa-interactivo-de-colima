@@ -1,37 +1,63 @@
-#toggleMancha1 {
-    position: absolute;
-    z-index: 1000;
-    /* Valor alto para estar por encima de otros elementos */
-    top: 1rem;
-    left: 10rem
-}
 
-#toggleMancha2 {
-    position: absolute;
-    z-index: 1000;
-    /* Valor alto para estar por encima de otros elementos */
-    top: 3rem;
-    left: 10rem
-}
-
-#toggleMancha3 {
-    position: absolute;
-    z-index: 1000;
-    /* Valor alto para estar por encima de otros elementos */
-    top: 5rem;
-    left: 10rem
-}
-
-#toggleMunicipio {
-    position: absolute;
-    z-index: 1000;
-    /* Valor alto para estar por encima de otros elementos */
-    top: 7rem;
-    left: 10rem
-}
 
 .sidebar {
     padding-top: 200px;
     height: 700px;
     overflow: auto;
+  
+}
+
+/* Estilos para el botón circular */
+.circular-button {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    left: 30px;
+    top: 90px;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../img/capas.png");
+   
+    background-size: 70%
+}
+
+/* Estilos para el menú desplegable */
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    left: 100px;
+    top: 90px;
+}
+
+/* Estilos para la lista de opciones */
+.options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+}
+
+.options-list li {
+    margin-bottom: 5px;
+    z-index: 1000;
+}
+
+.boton-poblacion {
+    width: 90px;
+}
+
+.boton-educacion {
+    width: 90px;
 }

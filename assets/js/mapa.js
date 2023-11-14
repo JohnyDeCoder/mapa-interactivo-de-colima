@@ -1,72 +1,107 @@
-// Crea un mapa Leaflet
-var map = L.map("map", {
-  minZoom: 11, // Nivel de zoom mínimo permitido
+var map = L.map('map', {
+  minZoom: 11
 }).setView([-103.72714, 19.24997], 11);
 
-// Agrega una capa de mapa base
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-/* El código `var control = L.Control.geocoder({...}).addTo(map);` está creando un control
-geocodificador y agregándolo al mapa del Folleto. */
-var control = L.Control.geocoder({
-  position: "topleft",
-  defaultMarkGeocode: true,
-  geocoder: L.Control.Geocoder.mapbox(
-    "pk.eyJ1Ijoic3Bpbm9uNjQiLCJhIjoiY2xvbjgwbmlqMHFmcDJrczZncGs1ejRnNCJ9._i-bNrmSZgkTubn6s64-cw",
-    {
-      proximity: L.latLng(19.2433, -103.7242), // Centro de Colima
-    }
-  ),
-}).addTo(map);
+var geocoderControl;
 
-/* El código `control.on('markgeocode', function (e) { map.setView(e.geocode.center, 15); });` está
-agregando un detector de eventos al control del geocodificador. */
-control.on("markgeocode", function (e) {
-  map.setView(e.geocode.center, 15);
-});
 
-// Carga el archivo GeoJSON que contiene los polígonos
-fetch("agebs.json") // Reemplaza 'Pruebas1.geojson' con la URL de tu archivo GeoJSON
-  .then((response) => response.json()) // Utiliza response.json() para analizar el archivo GeoJSON
-  .then((data) => {
-    // Convierte el GeoJSON en una capa de polígonos en Leaflet
-    var polygons = L.geoJSON(data, {
-      style: function (feature) {
-        var POBTOT = feature.properties.POBTOT;
-        var nombre = feature.properties.name;
-        var fillColor;
+fetch('agebs.json')
+  .then(response => response.json())
+  .then(data => {
+      var polygons = L.geoJSON(data, {
+          style: function (feature) {
+              var personas = feature.properties.POBTOT;
+              var nombre = feature.properties.name;
+              var fillColor;
+              console.log(personas);
 
-        // Define el color basado en el valor de "POBTOT"
-        if (nombre === "Municipio Colima") {
-          fillColor = "transparent"; // Establece el relleno como transparente
-        }
+            
+       
+          // Definir el rango para el color en función de POBTOT
+          if (personas >= 0 && personas <= 51) {
+              fillColor = '#FF007F';  // Color fuerte para números grandes
+          } else if (personas > 51 && personas <= 200) {
+              fillColor = '#FF66B2';
+          } else if (personas >= 201 && personas <= 1000) {
+              fillColor = '#FFB2D9';
+          } else if (personas >= 1001) {
+              fillColor = '#ffdbed';
+          } // Color más pálido para números bajos
+      
 
-        if (POBTOT === 3 && nombre === "060020001134A") {
-          fillColor = "black";
-        }
 
-        if (POBTOT <= 10) {
-          fillColor = "purple";
-        } else if (POBTOT <= 30 && POBTOT >= 11) {
-          fillColor = "green";
-        }
+              return {
+                  fillColor: fillColor,
+                  color: 'transparent',
+                  weight: 0.5,
+                  opacity: 1,
+                  fillOpacity: 0.9
+              };
+          }
+      });
 
-        return {
-          fillColor: fillColor,
-          color: "blue",
-          weight: 0.5,
-          opacity: 1,
-          fillOpacity: 0.5,
-        };
-      },
-    });
+      var geocoderOptions = {
+          collapsed: false,
+          placeholder: "Buscar ubicación...",
+          geocoders: new L.Control.Geocoder.OpenCage('eb23fa5452414e24bd659cfa2888aac7'),
+          defaultMarkGeocode: true,
+          country: 'mx',
+          language: 'es',
+      };
 
-    // Agrega los polígonos al mapa
-    polygons.addTo(map);
+      // Añadir límites geográficos para las búsquedas (en este caso, para Colima)
+      geocoderOptions.geocoders.options.bounds = L.latLngBounds(
+          L.latLng(18.7319, -104.6608), // Esquina suroeste de la región de interés
+          L.latLng(20.9085, -103.3948)  // Esquina noreste de la región de interés
+      );
 
-    // Ajusta la vista del mapa para que muestre todos los polígonos
-    map.fitBounds(polygons.getBounds());
+      geocoderControl = L.Control.geocoder(geocoderOptions).addTo(map);
+
+      // Agregar un evento para manejar la selección de ubicaciones
+      geocoderControl.on('markgeocode', function (event) {
+          var location = event.geocode.center;
+          
+          // Limpiar marcadores anteriores
+          map.eachLayer(function (layer) {
+              if (layer instanceof L.Marker) {
+                  map.removeLayer(layer);
+              }
+          });
+
+          // Añadir un marcador en la ubicación seleccionada
+          L.marker(location).addTo(map);
+          
+          // Opcional: Ajustar la vista del mapa a la ubicación seleccionada
+          map.setView(location, 15);
+      });
+
+      polygons.addTo(map);
+      map.fitBounds(polygons.getBounds());
+  })
+  .catch(error => {
+      console.error('Error:', error);
   });
+
+
+   // Función para mostrar/ocultar el menú desplegable al hacer clic en el botón
+   function toggleDropdown() {
+      var dropdown = document.getElementById("dropdown");
+      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+  }
+
+  function toggleDropdown1() {
+      var dropdown1 = document.getElementById('dropdown1');
+      dropdown1.style.display = (dropdown1.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function toggleDropdown2() {
+      var dropdown2 = document.getElementById('dropdown2');
+      dropdown2.style.display = (dropdown2.style.display === 'block') ? 'none' : 'block';
+  }
+
+
+  
