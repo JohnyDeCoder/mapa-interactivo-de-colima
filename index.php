@@ -128,13 +128,9 @@ require __DIR__ . '/start.php';
     <!-- Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <!-- iconos -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
-    <script src="https://cdn.maptiler.com/maptiler-geocoding-control/v0.0.98/leaflet.umd.js"></script>
-    <link href="https://cdn.maptiler.com/maptiler-geocoding-control/v0.0.98/style.css" rel="stylesheet">
     <!-- Link de CSS -->
-    <link rel="stylesheet" href="assets/CSS/style.css">
+    <link rel="stylesheet" href="assets/CSS/sstyle.css">
     <title>Document</title>
 </head>
 <body>
@@ -150,44 +146,42 @@ require __DIR__ . '/start.php';
 <!-- Menú desplegable con opciones de checkbox -->
  <div id="dropdown" class="dropdown">
   <ul class="options-list">
-
-      <li>
+      
+        <br>
+        
         <button class="boton-poblacion" id="Poblacion" onclick="toggleDropdown1()">Población</button>
           <!-- Menú desplegable de Opción 2 -->
           <div id="dropdown1" class="dropdown1">
               <ul class="options-list1">
-                  <li>
-                      <<input type="checkbox" id="option2" onchange=""> 
-                      <label for="option2"> Opción 2 </label>
-                  </li>
-                  </li>
+                  
                   <li>
                       <input type="checkbox" id="option3"> 
-                      <label for="option3">Opción 3</label>
+                      <label for="option3">Población Total</label>
                   </li>
                   <li>
                       <input type="checkbox" id="option4"> 
-                      <label for="option4">Opción 4</label>
+                      <label for="option4">Población Masculina</label>
                   </li>
                   <li>
                       <input type="checkbox" id="option5"> 
-                      <label for="option5">Opción 5</label>
+                      <label for="option5">Población Femenina</label>
                   </li>
               </ul>
           </div>
-      </li>
+      
 
-      <li>
+      <li><br>
         <button  class="boton-educacion" type="button" id="Educacion" onclick="toggleDropdown2()">Educacion</button>
+        
         <!-- Menú desplegable de Opción 2 -->
-        <div id="dropdown2" class="dropdown2">
-            <ul class="options-list1">
-                <li>
-                    <input type="checkbox" id="option6"> 
-                    <label for="option6">Opción 2</label>
-                </li>
-            </ul>
-        </div>
+        <div id="dropdown1" class="dropdown1">
+        <ul>
+            <li>
+                <input type="checkbox" id="option2" onchange=""> 
+                <label for="option2" class="ageb-text"> Agebs </label>
+            </li>
+        </ul>
+          </div>
     </li>
 
   </ul>
@@ -202,7 +196,7 @@ require __DIR__ . '/start.php';
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
-    <script src="assets/js/mapa.js"></script>
+    <script src="assets/js/mapa1.js"></script>
 
     
     
