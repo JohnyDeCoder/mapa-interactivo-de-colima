@@ -1,107 +1,170 @@
-let map = L.map('map', {
+let map = L.map("map", {
   browserPrint: true,
-    minZoom:11,
-}).setView([19.241882,-103.726051],11)
+  minZoom: 11,
+}).setView([19.241882, -103.726051], 11);
 
 //Agregar tilelAyer mapa base desde openstreetmap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-// Configurar popup
-function popup(feature,layer) {
-    if( feature.properties.POBTOT){
-        layer.bindPopup("<strong>Poblacion Total:</strong>" + feature.properties.POBTOT + "<strong>id:</strong>" + feature.properties.name)
+document.addEventListener("DOMContentLoaded", function () {
+  var overlays = {}; // Objeto para almacenar las capas de overlay
+
+  // Función para que añada la capa al objeto de overlays
+  function initializeLayer(checkboxId, layer, label) {
+    var checkbox = document.getElementById(checkboxId);
+    overlays[label] = layer;
+
+    checkbox.addEventListener("change", function () {
+      if (this.checked) {
+        layer.addTo(map);
+      } else {
+        map.removeLayer(overlays[label]); // Remueve la capa del mapa
+      }
+    });
+  }
+
+  // Función para obtener el contenido del popup
+  function getPopupContent(feature) {
+    let content = [
+      "<strong>Clave AGEB:</strong> " + feature.properties["CVEGEO"],
+    ];
+    if (map.hasLayer(agebsLayer)) {
+      content.push(
+        "<strong>Población Total:</strong> " +
+          feature.properties.POBTOT.toLocaleString("es-MX")
+      );
     }
-}
+    if (map.hasLayer(agebsLayerM)) {
+      content.push(
+        "<strong>Población Masculina:</strong> " +
+          feature.properties.POBMAS.toLocaleString("es-MX")
+      );
+    }
+    if (map.hasLayer(agebsLayerF)) {
+      content.push(
+        "<strong>Población Femenina:</strong> " +
+          feature.properties.POBFEM.toLocaleString("es-MX")
+      );
+    }
+    return content.join("<br>");
+  }
 
-//Agregar capa en json
-L.geoJson(agebs);
+  // Función para añadir el popup a cada feature
+  function popupInfo(feature, layer) {
+    layer.on({
+      add: function () {
+        layer.bindPopup(getPopupContent(feature)); // Añade el popup al layer
+      },
+    });
+  }
 
-let agebsJS = L.geoJson(agebs,{
-  style: style,
-    onEachFeature: popup
+  // Crear y añadir las capas de overlay al objeto overlays
+  let agebsLayer = L.geoJson(agebs, {
+    style: style,
+    onEachFeature: popupInfo,
+  });
+  let agebsLayerM = L.geoJson(agebs, {
+    style: styleM,
+    onEachFeature: popupInfo,
+  });
+  let agebsLayerF = L.geoJson(agebs, {
+    style: styleF,
+    onEachFeature: popupInfo,
+  });
+
+  initializeLayer("idPoblacionTot", agebsLayer, "Población Total");
+  initializeLayer("idPoblacionMasc", agebsLayerM, "Población Masculina");
+  initializeLayer("idPoblacionFem", agebsLayerF, "Población Femenina");
 });
 
-
-// Geocoder buscador en el mapa 
+// Geocoder buscador en el mapa
 var geocoder = L.Control.geocoder({
-  defaultMarkGeocode: false
+  defaultMarkGeocode: false,
 })
-  .on('markgeocode', function(e) {
+  .on("markgeocode", function (e) {
     var bbox = e.geocode.bbox;
     var poly = L.polygon([
       bbox.getSouthEast(),
       bbox.getNorthEast(),
       bbox.getNorthWest(),
-      bbox.getSouthWest()
+      bbox.getSouthWest(),
     ]).addTo(map);
     map.fitBounds(poly.getBounds());
   })
   .addTo(map);
 
-                                    ////////////////////////////////////////////////////////////////
-                                    ////////////////////////////////////////////////////////////////
-                                        // Funciones para desplegar la botonera principal  //
-                                    ////////////////////////////////////////////////////////////////
-                                    ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+// Funciones para desplegar la botonera principal  //
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
-                                    
 // Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de capas
 function toggleDropdown() {
   var dropdown = document.getElementById("dropdown");
   var dropdownMapas = document.getElementById("dropdownSubMapas");
   var dropdownMedicion = document.getElementById("dropdownMedicion");
-  
-    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    ocultarOtrosMenus(dropdown);
-  
-    // Ocultar otros menús si están abiertos
-    dropdownMapas.style.display = "none";
-    dropdownMedicion.style.display = "none";
-  }
+
+  dropdown.style.display =
+    dropdown.style.display === "block" ? "none" : "block";
+  ocultarOtrosMenus(dropdown);
+
+  // Ocultar otros menús si están abiertos
+  dropdownMapas.style.display = "none";
+  dropdownMedicion.style.display = "none";
+}
 
 // Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de mapas
 function toggleDropdownMapas() {
   var dropdownMapas = document.getElementById("dropdownSubMapas");
   var dropdownMedicion = document.getElementById("dropdownMedicion");
 
-    dropdownMapas.style.display = (dropdownMapas.style.display === "block") ? "none" : "block";
-    dropdownMedicion.style.display = "none"; // Oculta el menú de medicion
-    ocultarOtrosMenus(dropdownMapas);
+  dropdownMapas.style.display =
+    dropdownMapas.style.display === "block" ? "none" : "block";
+  dropdownMedicion.style.display = "none"; // Oculta el menú de medicion
+  ocultarOtrosMenus(dropdownMapas);
 }
 
- // Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de medicion
+// Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de medicion
 function toggleDropdownMedicion() {
-   var dropdownMedicion = document.getElementById("dropdownMedicion");
-   var dropdownMapas = document.getElementById("dropdownSubMapas");
+  var dropdownMedicion = document.getElementById("dropdownMedicion");
+  var dropdownMapas = document.getElementById("dropdownSubMapas");
 
-    dropdownMedicion.style.display = (dropdownMedicion.style.display === "block") ? "none" : "block";
-    dropdownMapas.style.display = "none"; // Oculta el menú de mapas
-    ocultarOtrosMenus(dropdownMedicion);
+  dropdownMedicion.style.display =
+    dropdownMedicion.style.display === "block" ? "none" : "block";
+  dropdownMapas.style.display = "none"; // Oculta el menú de mapas
+  ocultarOtrosMenus(dropdownMedicion);
 }
 
 function toggleDropdown1() {
-    var dropdown1 = document.getElementById('dropdown1');
-    dropdown1.style.display = (dropdown1.style.display === 'block') ? 'none' : 'block';
+  var dropdown1 = document.getElementById("dropdown1");
+  dropdown1.style.display =
+    dropdown1.style.display === "block" ? "none" : "block";
 }
 
 function toggleDropdown2() {
-    var dropdown2 = document.getElementById('dropdown2');
-    dropdown2.style.display = (dropdown2.style.display === 'block') ? 'none' : 'block';
+  var dropdown2 = document.getElementById("dropdown2");
+  dropdown2.style.display =
+    dropdown2.style.display === "block" ? "none" : "block";
 }
 
 function toggleDropdown3() {
-  var dropdown3 = document.getElementById('dropdown3');
-  dropdown3.style.display = (dropdown3.style.display === 'block') ? 'none' : 'block';
+  var dropdown3 = document.getElementById("dropdown3");
+  dropdown3.style.display =
+    dropdown3.style.display === "block" ? "none" : "block";
 }
 
 // Función para ocultar todos los menús excepto el proporcionado
 function ocultarOtrosMenus(menuActual) {
-  var menus = document.querySelectorAll('.dropdown, .dropdown1, .dropdown2, .dropdown3, .dropdownSubMapas');
+  var menus = document.querySelectorAll(
+    ".dropdown, .dropdown1, .dropdown2, .dropdown3, .dropdownSubMapas"
+  );
   menus.forEach(function (menu) {
     if (menu !== menuActual) {
-      menu.style.display = 'none';
+      menu.style.display = "none";
     }
   });
 }
@@ -118,54 +181,6 @@ function ocultarMenu() {
 }
 
 document.addEventListener("DOMContentLoaded", ocultarMenu);
-
-document.addEventListener("DOMContentLoaded", function () {
-  var poblacionCheckbox = document.getElementById("idPoblacionTot");
-  poblacionCheckbox.addEventListener("change", togglePoblacionLayer);
-
-  // Asegurarse de que la capa no esté añadida al mapa al inicio
-  togglePoblacionLayer();
-});
-
-function initializeLayer(checkbox, layer, populationField) {
-  checkbox.addEventListener("change", function () {
-    // Remover todas las capas del mapa
-    map.eachLayer(function (layer) {
-      if (layer instanceof L.GeoJSON) {
-        map.removeLayer(layer);
-      }
-    });
-
-    // Añadir la capa actual al mapa si está marcada
-    if (checkbox.checked) {
-      layer.addTo(map);
-    }
-  });
-
-  layer.eachLayer(function (featureLayer) {
-    featureLayer.on({
-      mouseover: function (e) {
-        var layer = e.target;
-        layer.setStyle({
-          weight: 5,
-          color: "#666",
-          dashArray: "",
-          fillOpacity: 0.7,
-        });
-      },
-      mouseout: function (e) {
-        layer.resetStyle(e.target);
-      },
-    });
-
-    featureLayer.bindPopup(
-      "<strong>Población:</strong>" +
-        featureLayer.feature.properties[populationField] +
-        "<strong>id:</strong>" +
-        featureLayer.feature.properties.name
-    );
-  });
-}
 
 function getColor(d) {
   return d > 1000
@@ -254,47 +269,32 @@ function styleF(feature) {
   };
 }
 
-let poblacionCheckbox = document.getElementById("idPoblacionTot");
-let poblacionMCheckbox = document.getElementById("idPoblacionMasc");
-let poblacionFCheckbox = document.getElementById("idPoblacionFem");
-
-let agebsLayer = L.geoJson(agebs, {
-  style: style,
-});
-initializeLayer(poblacionCheckbox, agebsLayer, "POBTOT");
-
-let agebsLayerM = L.geoJson(agebs, {
-  style: styleM,
-});
-initializeLayer(poblacionMCheckbox, agebsLayerM, "POBMAS");
-
-let agebsLayerF = L.geoJson(agebs, {
-  style: styleF,
-});
-initializeLayer(poblacionFCheckbox, agebsLayerF, "POBFEM");
-
-
 // Funcionalidad para poder cambiar el tipo de mapa base
 // Mapas Base
-var worldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'World Imagery'
+var worldImagery = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    attribution: "World Imagery",
+  }
+);
+
+var worldStreetMap = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    attribution: "© OpenStreetMap contributors",
+  }
+);
+
+var topoMap = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenTopoMap contributors",
 });
 
-var worldStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-});
-
-var topoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenTopoMap contributors'
-});
-
-
-worldImagery.addTo(map);  // Mapa por defecto
+worldImagery.addTo(map); // Mapa por defecto
 
 function cambiarMapa(tipo) {
   // Eliminar solo las capas correspondientes al mapa base anterior
   switch (tipo) {
-    case 'WorldImagery':
+    case "WorldImagery":
       map.eachLayer(function (layer) {
         if (layer instanceof L.TileLayer) {
           map.removeLayer(layer);
@@ -302,7 +302,7 @@ function cambiarMapa(tipo) {
       });
       worldImagery.addTo(map);
       break;
-    case 'WorldStreetMap':
+    case "WorldStreetMap":
       map.eachLayer(function (layer) {
         if (layer instanceof L.TileLayer) {
           map.removeLayer(layer);
@@ -310,7 +310,7 @@ function cambiarMapa(tipo) {
       });
       worldStreetMap.addTo(map);
       break;
-    case 'TopoMap':
+    case "TopoMap":
       map.eachLayer(function (layer) {
         if (layer instanceof L.TileLayer) {
           map.removeLayer(layer);
