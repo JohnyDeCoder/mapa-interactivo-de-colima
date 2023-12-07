@@ -1,6 +1,6 @@
 <?php
 // Cargamos la configuración de Eloquent ORM
-require __DIR__ . '/start.php';
+require __DIR__.'/start.php';
 
 // $agebs = Poblaciones::get_all_onlyAGEB_POBTOT();
 
