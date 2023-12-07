@@ -121,29 +121,28 @@ require __DIR__ . '/start.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <!-- Boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <!-- Link de CSS -->
-    <link rel="stylesheet" href="assets/CSS/sstyle.css">
+    <!-- Libreria de LeaFlet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <!-- Link de archivo CSS -->
+     <link rel="stylesheet" href="assets/css/style.css">
+     <link rel="stylesheet" href="assets/css/print.css">
+     <!-- Libreria geocoder buscador -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
     <title>Document</title>
 </head>
 <body>
+    
+    <div>
+        <img class="img-logo" src="assets/img/logo.png" alt="logo-colima">
+    </div>
+  
+    
+<!-- Botón circular para capas -->
+<button class="circular-button-capas" onclick="toggleDropdown()"></button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-
-
-<!-- Botón circular -->
-<button class="circular-button" onclick="toggleDropdown()"></button>
-
-<!-- Menú desplegable con opciones de checkbox -->
+<!-- Menú desplegable con opciones de checkbox para boton de capas-->
  <div id="dropdown" class="dropdown">
   <ul class="options-list">
       
@@ -152,6 +151,30 @@ require __DIR__ . '/start.php';
         <button class="boton-poblacion" id="Poblacion" onclick="toggleDropdown1()">Población</button>
           <!-- Menú desplegable de Opción 2 -->
           <div id="dropdown1" class="dropdown1">
+            <ul class="options-list1">
+              <li>
+                <input
+                  type="checkbox"
+                  id="idPoblacionTot"
+                  onchange="togglePoblacionLayer()"
+                />
+                <label for="idPoblacionTot">Población Total</label>
+              </li>
+              <li>
+                <input type="checkbox" id="idPoblacionMasc" />
+                <label for="idPoblacionMasc">Población Masculina</label>
+              </li>
+              <li>
+                <input type="checkbox" id="idPoblacionFem" />
+                <label for="idPoblacionFem">Población Femenina</label>
+              </li>
+            </ul>
+        </div>
+
+            
+          <button class="boton-educacion" id="educacion" onclick="toggleDropdown3()">Educación</button>
+          <!-- Menú desplegable de Opción 2 -->
+          <div id="dropdown3" class="dropdown3">
               <ul class="options-list1">
                   
                   <li>
@@ -170,35 +193,80 @@ require __DIR__ . '/start.php';
           </div>
       
 
-      <li><br>
-        <button  class="boton-educacion" type="button" id="Educacion" onclick="toggleDropdown2()">Educacion</button>
+    <li>
+        
+        <button  class="boton-mapa" type="button" id="mapa" onclick="toggleDropdown2()">Mapa</button>
         
         <!-- Menú desplegable de Opción 2 -->
-        <div id="dropdown1" class="dropdown1">
+        <div id="dropdown2" class="dropdown2">
         <ul>
             <li>
-                <input type="checkbox" id="option2" onchange=""> 
-                <label for="option2" class="ageb-text"> Agebs </label>
+                <input type="checkbox" id="mapaAgeb" onchange=""> 
+                <label for="mapa" class="ageb-text"> Agebs </label>
             </li>
         </ul>
-          </div>
+        </div>
     </li>
 
   </ul>
 </div>
 
 
-    <!-- Crea un contenedor div para el mapa -->
-    <div id="map" style="width: 100%; height: 100vh;"></div>
+<!-- Botón circular para mapas -->
+<button class="circular-button-mapa" onclick="toggleDropdownMapas()"></button>
+
+<!-- Menú desplegable con opciones de checkbox para boton de mapas-->
+ <div id="dropdownSubMapas" class="dropdownSubMapas">
+  <ul class="options-list">
+      
+        <div clas="cont-btn-imagery">
+             <button class="btn-mapas" onclick="cambiarMapa('WorldImagery')">World Imagery</button>
+             <img class="img-imagery" src="assets/img/imagery.png" alt="imagery">
+        </div>
+        <div clas="cont-btn-world">
+             <button class="btn-mapas" onclick="cambiarMapa('WorldStreetMap')">World Street Map</button>
+             <img class="img-world" src="assets/img/world.png" alt="world">
+        </div>
+        <div clas="cont-btn-topo">
+             <button class="btn-mapas" onclick="cambiarMapa('TopoMap')">Topo Map</button>
+             <img class="img-topo" src="assets/img/topo.png" alt="topo">
+        </div>
+        
+        
+  </ul>
+</div>
 
 
-    <!-- Agrega el script para cargar y mostrar los polígonos -->
-    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- Botón circular para medicion -->
+<button class="circular-button-imprimir" onclick="toggleDropdownMedicion()"></button>
+
+
+        
+  
+
+
+
+    
+
+
+
+
+
+
+
+  <div id="map"></div>
+
+    <!-- Libreria de Leaflet Script -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <!-- Libreria de geocoder Script -->
     <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
-    <script src="assets/js/mapa1.js"></script>
-
-    
-    
+    <!-- Libreria para imrpimir -->
+    <script src="assets/libs/leaflet.browser.print.min.js"></script>
+    <!-- Link de archivo js app -->
+    <script src="assets/js/colima.js"></script>
+    <script src="assets/js/agebs.js"></script>
+    <script src="assets/js/mapa.js"></script>
 </body>
 </html>

@@ -1,0 +1,214 @@
+.leaflet-control-geocoder, .leaflet-control-geocoder-icon {
+    border-radius: 20px !important; 
+}
+
+.leaflet-control-geocoder-icon {
+    width: 40px !important;
+    height: 40px !important;   
+}
+
+.leaflet-control-geocoder {
+    top: 90px;
+}
+
+/* Estilo para el zoom del mapa */
+.leaflet-left .leaflet-control-zoom {
+    position: absolute !important;
+    margin-top: 20px;
+    margin-left: 25px;
+}
+
+
+.img-logo {
+    z-index: 1000;
+    position: absolute;
+    width: 300px;
+   margin-top: -50px;
+   left: 1239px;
+}
+
+#map {
+    height: 100%;
+}
+    
+    
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+/* Estilos para el botón circular capas */
+.circular-button-capas {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 50%;
+    border: solid 2px black;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    left: 30px;
+    top: 110px;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../img/capas.png");
+   
+    background-size: 70%
+}
+
+/* Estilos para el botón circular mapa*/
+.circular-button-mapa {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 50%;
+    border: solid 2px black;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    left: 30px;
+    top: 180px;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../img/mexico.png");
+    background-size: 70%
+}
+
+/* Estilos para el botón circular medicion*/
+.circular-button-imprimir {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 50%;
+    border: solid 2px black;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    left: 30px;
+    top: 250px;
+    z-index: 1000;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../img/imprimir.png");
+    background-size: 70%
+}
+
+/* Estilos para el menú desplegable capas*/
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #19222b;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+    left: 100px;
+    top: 90px;
+    width: 250px;
+}
+
+/* Estilos para el menú desplegable mapas*/
+.dropdownSubMapas {
+    display: none;
+    position: absolute;
+    background-color: #19222b;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+    left: 100px;
+    top: 90px;
+    width: 250px;
+}
+
+/* Estilos para el menú desplegable medicion*/
+.dropdownMedicion {
+    display: none;
+    position: absolute;
+    background-color: #19222b;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+    left: 100px;
+    top: 90px;
+    width: 250px;
+}
+
+
+/* Estilos para la lista de opciones */
+.options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.options-list li {
+    margin-bottom: 5px;
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+.boton-poblacion {
+    width: 185px;
+    padding-left: 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: #04f997;
+    margin-bottom: 8px;
+    border: solid black 3px;
+}
+
+.boton-mapa {
+    width: 185px;
+    padding-left: 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: #04f997;
+    margin-bottom: 20px;
+    border: solid black 3px;
+    margin-top: 8px;
+}
+
+.boton-educacion {
+    width: 185px;
+    padding-left: 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: #04f997;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    border: solid black 3px;
+}
+
+/* Estilo para boton de mapa imagery */
+.btn-mapas {
+    width: 185px;
+    padding-left: 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: #04f997;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    border: solid black 3px;
+}
+
+.img-imagery, .img-topo, .img-world  {
+    padding-left: 90px;
+    padding-bottom: 10px;
+}
+
+
+/* Estilo para boton de mediciones y area */
+ .img-longitud, .img-area  {
+    padding-left: 90px;
+} 
+
