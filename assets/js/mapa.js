@@ -1,3 +1,7 @@
+//? COSAS QUE HACER
+//! CREAR UN CÓDIGO MÁS LIMPIO Y ORDENADO
+//! CAMBIAR RUTA DE FETCH
+
 let map = L.map("map", {
   browserPrint: true,
   minZoom: 11,
@@ -78,6 +82,86 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeLayer("idPoblacionTot", agebsLayer, "Población Total");
   initializeLayer("idPoblacionMasc", agebsLayerM, "Población Masculina");
   initializeLayer("idPoblacionFem", agebsLayerF, "Población Femenina");
+
+  // Función para obtener los datos de las capas activas
+  function getActiveLayersData() {
+    return {
+      claveAGEB: true, // Siempre mostramos la clave AGEB
+      poblacionTotal: map.hasLayer(agebsLayer),
+      poblacionMasculina: map.hasLayer(agebsLayerM),
+      poblacionFemenina: map.hasLayer(agebsLayerF),
+    };
+  }
+
+  // Función para obtener los datos de un AGEB
+  function getAGEBData(feature) {
+    return {
+      claveAGEB: feature.properties["CVEGEO"],
+      poblacionTotal: feature.properties.POBTOT,
+      poblacionMasculina: feature.properties.POBMAS,
+      poblacionFemenina: feature.properties.POBFEM,
+    };
+  }
+
+  // Función para construir una tabla HTML con los datos de los AGEBs
+  function buildTable(data, activeLayers) {
+    let table =
+      "<h1>Reporte / AGEBS</h1> <table width='100%' border='1' style='text-align: center;'>";
+    table += "<tr>";
+    table += "<th>Clave AGEB</th>";
+    if (activeLayers.poblacionTotal) table += "<th>Población Total</th>";
+    if (activeLayers.poblacionMasculina)
+      table += "<th>Población Masculina</th>";
+    if (activeLayers.poblacionFemenina) table += "<th>Población Femenina</th>";
+    table += "</tr>";
+
+    data.forEach((AGEB) => {
+      table += "<tr>";
+      table += `<td>${AGEB.claveAGEB}</td>`;
+      if (activeLayers.poblacionTotal)
+        table += `<td>${AGEB.poblacionTotal}</td>`;
+      if (activeLayers.poblacionMasculina)
+        table += `<td>${AGEB.poblacionMasculina}</td>`;
+      if (activeLayers.poblacionFemenina)
+        table += `<td>${AGEB.poblacionFemenina}</td>`;
+      table += "</tr>";
+    });
+
+    table += "</table>";
+    return table;
+  }
+
+  // Evento para generar el reporte
+  document
+    .getElementById("generarReporte")
+    .addEventListener("click", function () {
+      // Obtener los datos de las capas activas
+      let activeLayers = getActiveLayersData();
+
+      // Obtener los datos de los AGEBs
+      let AGEBsData = agebs.features.map((feature) => getAGEBData(feature));
+
+      // Construir la tabla HTML con las capas activas
+      let tableHTML = buildTable(AGEBsData, activeLayers);
+
+      // Crear un objeto FormData para enviar los datos
+      var formData = new FormData();
+      formData.append("tablaAGEBs", tableHTML);
+
+      // Enviar los datos al archivo PHP mediante POST
+      fetch("../../../mapa-interactivo-de-colima/assets/php/createReport.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Crear un URL temporal para el blob
+          var url = window.URL.createObjectURL(blob);
+          // Abrir el PDF en una nueva pestaña
+          window.open(url, "_blank");
+        })
+        .catch((error) => console.error("Error:", error));
+    });
 });
 
 // Geocoder buscador en el mapa
@@ -322,5 +406,4 @@ function cambiarMapa(tipo) {
 }
 
 // Funcionalidad para imprimir mapa
-
 L.control.browserPrint().addTo(map);

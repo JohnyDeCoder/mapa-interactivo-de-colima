@@ -1,10 +1,11 @@
-.leaflet-control-geocoder, .leaflet-control-geocoder-icon {
-    border-radius: 20px !important; 
+.leaflet-control-geocoder,
+.leaflet-control-geocoder-icon {
+    border-radius: 20px !important;
 }
 
 .leaflet-control-geocoder-icon {
     width: 40px !important;
-    height: 40px !important;   
+    height: 40px !important;
 }
 
 .leaflet-control-geocoder {
@@ -23,16 +24,17 @@
     z-index: 1000;
     position: absolute;
     width: 300px;
-   margin-top: -50px;
-   left: 1239px;
+    margin-top: -50px;
+    left: 1239px;
 }
 
 #map {
     height: 100%;
 }
-    
-    
-body, html {
+
+
+body,
+html {
     height: 100%;
     margin: 0;
 }
@@ -54,7 +56,7 @@ body, html {
     background-repeat: no-repeat;
     background-position: center;
     background-image: url("../img/capas.png");
-   
+
     background-size: 70%
 }
 
@@ -94,7 +96,7 @@ body, html {
     z-index: 1000;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("../img/imprimir.png");
+    background-image: url("../img/report.png");
     background-size: 70%
 }
 
@@ -201,14 +203,16 @@ body, html {
     border: solid black 3px;
 }
 
-.img-imagery, .img-topo, .img-world  {
+.img-imagery,
+.img-topo,
+.img-world {
     padding-left: 90px;
     padding-bottom: 10px;
 }
 
 
 /* Estilo para boton de mediciones y area */
- .img-longitud, .img-area  {
+.img-longitud,
+.img-area {
     padding-left: 90px;
-} 
-
+}

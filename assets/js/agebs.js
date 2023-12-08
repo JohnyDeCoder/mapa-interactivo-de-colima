@@ -1,4 +1,4 @@
-var agebs = {
+const agebs = {
     "type": "FeatureCollection",
     "features": [
         {
