@@ -407,3 +407,27 @@ function cambiarMapa(tipo) {
 
 // Funcionalidad para imprimir mapa
 L.control.browserPrint().addTo(map);
+
+// Agregar un contenedor para mostrar las coordenadas
+var coordinatesContainer = L.DomUtil.create('div', 'coordinates-container');
+coordinatesContainer.style.position = 'absolute';
+coordinatesContainer.style.bottom = '40px';
+coordinatesContainer.style.left = '20px';
+coordinatesContainer.style.backgroundColor = 'white';
+coordinatesContainer.style.padding = '5px';
+coordinatesContainer.style.borderRadius = '5px';
+document.getElementById('map').appendChild(coordinatesContainer);
+
+// Manejar el evento mousemove
+map.on('mousemove', function (e) {
+  // Actualizar las coordenadas en el contenedor
+  coordinatesContainer.innerHTML = 'Latitud: ' + e.latlng.lat.toFixed(6) + '<br>Longitud: ' + e.latlng.lng.toFixed(6);
+});
+
+L.control.scale({
+  position: 'bottomleft',
+  metric: true,
+  imperial: false,
+  units: 'kilometers',
+
+}).addTo(map);
