@@ -1,11 +1,47 @@
+const bounds = L.geoJson(colimaGeoJson).getBounds(); // Obtener los límites del GeoJSON de Colima
+
 let map = L.map("map", {
-  minZoom: 11,
-}).setView([19.241882, -103.726051], 11);
+  minZoom: 11, // minZoom: 11 (default)
+  maxZoom: 16, // maxZoom: 18 (default)
+  maxBounds: bounds, // Para que el mapa no se salga de los límites
+  maxBoundsViscosity: 1,
+  attributionControl: true, // Para que no aparezca el mensaje de Leaflet
+  doubleClickZoom: false, // Para que no se pueda hacer zoom con doble click
+  zoomControl: true, // Control de zoom
+  zoomSnap: 1, // Para que el zoom sea más suave (default: 0.1)
+  zoomDelta: 1, // Para que el zoom sea más suave (default: 0.1)
+}).setView(bounds.getCenter(), 11); // Centrar el mapa en los límites del GeoJSON de Colima
 
 //Agregar titleLayer mapa base desde openstreetmap
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+// Agregar el GeoJSON de Colima
+L.geoJson(colimaGeoJson, {
+  style: () => {
+    return {
+      color: "#000000",
+      opacity: 1,
+      color: "black",
+      dashArray: "5",
+      fillOpacity: 0,
+    };
+  },
+}).addTo(map);
+
+// Agregar el GeoJSON de AGEBS
+L.geoJson(agebsGeoJson, {
+  style: () => {
+    return {
+      color: "#000000",
+      opacity: 1,
+      color: "black",
+      dashArray: "5",
+      fillOpacity: 0,
+    };
+  },
 }).addTo(map);
 
 // Geocoder buscador en el mapa
@@ -145,7 +181,6 @@ function getColorByDim(dim, colorScale) {
 function returnStyle(colorScale) {
   return {
     fillColor: colorScale,
-    weight: 2,
     opacity: 1,
     color: "black",
     fillOpacity: 0.7,
@@ -168,7 +203,9 @@ function popupInfo(feature, layer) {
         // Iterar sobre las capas activas y añadir los datos a la lista
         if (activeLayers[key]) {
           // Si la capa está activa
-          popupContent += `<li><strong>${LABELED_LIST[key]}:</strong> ${dataLayers[0][key]}</li>`; // Añadir el dato a la lista
+          popupContent += `<li><strong>${
+            LABELED_LIST[key]
+          }:</strong> ${dataLayers[0][key].toLocaleString("en-US")}</li>`; // Añadir el dato a la lista
         }
       }
       popupContent += "</ul>"; // Fin de la lista
@@ -262,7 +299,7 @@ function getActiveLayersAndData(features, overlays) {
 // Función para construir la tabla HTML
 function buildTable(activeLayers, dataLayers) {
   let table =
-    "<h1>Reporte / AGEBS</h1> <table width='100%' border='1' style='text-align: center;'>";
+    "<hr> <h1>Reporte / AGEBS</h1> <table width='100%' border='1' style='text-align: center;'>";
   table += "<tr>";
 
   // Iterar sobre las capas activas y añadir encabezados
