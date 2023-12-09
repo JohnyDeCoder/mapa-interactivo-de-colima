@@ -27,133 +27,75 @@ let geocoder = L.Control.geocoder({
 // Objeto para almacenar las capas de overlay
 let overlays = {};
 
-// Lista de nombres de capas de AGEBs
 const LABELED_LIST = {
-  claveAGEB: "Clave AGEB",
-  POBTOT: "Población Total",
-  POBMAS: "Población Masculina",
-  POBFEM: "Población Femenina",
-};
-
-// Lista de capas de AGEBs
-const AGEBS_LIST = {
-  POBTOT: {
-    overlayLayer: () => {
-      return L.geoJson(agebsGeoJson, {
-        style: function (feature) {
-          return {
-            fillColor: AGEBS_LIST.POBTOT.colorScale(feature.properties.POBTOT),
-            weight: 2,
-            opacity: 1,
-            color: "white",
-            dashArray: "3",
-            fillOpacity: 0.7,
-          };
-        },
-        onEachFeature: popupInfo,
-      });
+    // Lista de nombres de capas de AGEBs
+    claveAGEB: "Clave AGEB",
+    POBTOT: "Población Total",
+    POBMAS: "Población Masculina",
+    POBFEM: "Población Femenina",
+  },
+  AGEBS_LIST = {
+    // Lista de capas de AGEBs
+    POBTOT: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: function (feature) {
+            return returnStyle(
+              AGEBS_LIST.POBTOT.colorScale(feature.properties.POBTOT)
+            );
+          },
+          onEachFeature: popupInfo,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("YlOrRd", 8));
+      },
     },
-    colorScale: (dim) => {
-      return dim > 1000
-        ? "#800026"
-        : dim > 500
-        ? "#BD0026"
-        : dim > 200
-        ? "#E31A1C"
-        : dim > 100
-        ? "#FC4E2A"
-        : dim > 50
-        ? "#FD8D3C"
-        : dim > 20
-        ? "#FEB24C"
-        : dim > 10
-        ? "#FED976"
-        : "#FFEDA0";
+    POBMAS: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.POBMAS.colorScale(feature.properties.POBMAS)
+            );
+          },
+          onEachFeature: popupInfo,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("YlGnBu", 8));
+      },
+    },
+    POBFEM: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.POBFEM.colorScale(feature.properties.POBFEM)
+            );
+          },
+          onEachFeature: popupInfo,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("RdPu", 8));
+      },
     },
   },
-  POBMAS: {
-    overlayLayer: () => {
-      return L.geoJson(agebsGeoJson, {
-        style: (feature) => {
-          return {
-            fillColor: AGEBS_LIST.POBMAS.colorScale(feature.properties.POBMAS),
-            weight: 2,
-            opacity: 1,
-            color: "white",
-            dashArray: "3",
-            fillOpacity: 0.7,
-          };
-        },
-        onEachFeature: popupInfo,
-      });
-    },
-    colorScale: (dim) => {
-      return dim > 1000
-        ? "#0046FF"
-        : dim > 500
-        ? "#009EFF"
-        : dim > 200
-        ? "#00D1FF"
-        : dim > 100
-        ? "#00FBFF"
-        : dim > 50
-        ? "#73FDFF"
-        : dim > 20
-        ? "#37FDFD"
-        : dim > 10
-        ? "#89F9F9"
-        : "#C6FFFF";
-    },
-  },
-  POBFEM: {
-    overlayLayer: () => {
-      return L.geoJson(agebsGeoJson, {
-        style: (feature) => {
-          return {
-            fillColor: AGEBS_LIST.POBFEM.colorScale(feature.properties.POBFEM),
-            weight: 2,
-            opacity: 1,
-            color: "white",
-            dashArray: "3",
-            fillOpacity: 0.7,
-          };
-        },
-        onEachFeature: popupInfo,
-      });
-    },
-    colorScale: (dim) => {
-      return dim > 1000
-        ? "#FF00D4"
-        : dim > 500
-        ? "#FF60E4"
-        : dim > 200
-        ? "#FF90EC"
-        : dim > 100
-        ? "#FFBBF3"
-        : dim > 50
-        ? "#FFD0F7"
-        : dim > 20
-        ? "#FFDCF9"
-        : dim > 10
-        ? "#FED976"
-        : "#FFEDA0";
-    },
-  },
-};
+  dropdownDiv = document.getElementById("dropdown"), // Obtener el div del menú desplegable
+  checkboxes = dropdownDiv.querySelectorAll("input[type='checkbox']"); // Obtener los checkboxes del menú desplegable
 
-// Inicializar las capas de overlay
-
-// Población
-initializeLayer("checkboxPobTot", AGEBS_LIST.POBTOT.overlayLayer(), "POBTOT");
-
-initializeLayer("checkboxPobMas", AGEBS_LIST.POBMAS.overlayLayer(), "POBMAS");
-
-initializeLayer("checkboxPobFem", AGEBS_LIST.POBFEM.overlayLayer(), "POBFEM");
-
-// Educación
-// ...
-
-// Fin de la inicialización de las capas de overlay
+// Iterar sobre los checkboxes para inicializar las capas de overlay
+checkboxes.forEach((checkbox) => {
+  if (AGEBS_LIST[checkbox.id]) {
+    // Inicializar la capa de overlay
+    initializeLayer(
+      checkbox.id,
+      AGEBS_LIST[checkbox.id].overlayLayer(),
+      checkbox.id
+    );
+  }
+});
 
 // Función para que añada la capa al objeto de overlays
 function initializeLayer(checkboxId, overlayLayer, key) {
@@ -169,7 +111,46 @@ function initializeLayer(checkboxId, overlayLayer, key) {
   });
 }
 
-// Funciones Extras
+// Función para generar la escala de colores
+function generateColorScale(baseColor, steps) {
+  // Para obtener las paletas de colores de brewer visite: https://colorbrewer2.org/
+
+  // Código anterior para generar la escala de colores utilizando un color hexadecimal base
+  // chroma.scale(["white", baseColor]).mode("lch").colors(steps);
+
+  // Generar la escala de colores utilizando Chroma.js
+  return chroma.scale(baseColor).colors(steps);
+}
+
+// Función para obtener el color correspondiente al valor 'dim'
+function getColorByDim(dim, colorScale) {
+  return dim > 1000
+    ? colorScale[7]
+    : dim > 500
+    ? colorScale[6]
+    : dim > 200
+    ? colorScale[5]
+    : dim > 100
+    ? colorScale[4]
+    : dim > 50
+    ? colorScale[3]
+    : dim > 20
+    ? colorScale[2]
+    : dim > 10
+    ? colorScale[1]
+    : colorScale[0];
+}
+
+// Función para devolver el estilo de la capa
+function returnStyle(colorScale) {
+  return {
+    fillColor: colorScale,
+    weight: 2,
+    opacity: 1,
+    color: "black",
+    fillOpacity: 0.7,
+  };
+}
 
 // Función para mostrar la información de las AGEBS
 function popupInfo(feature, layer) {
