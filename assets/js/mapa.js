@@ -118,7 +118,7 @@ function generateColorScale(baseColor, steps) {
   // Código anterior para generar la escala de colores utilizando un color hexadecimal base
   // chroma.scale(["white", baseColor]).mode("lch").colors(steps);
 
-  // Generar la escala de colores utilizando Chroma.js
+  // Generar la escala de colores utilizando Chroma.js con los colores de Brewer
   return chroma.scale(baseColor).colors(steps);
 }
 
@@ -206,11 +206,18 @@ document
     formData.append("tablaAGEBs", tableHTML);
 
     // Enviar los datos al archivo PHP mediante POST
-    fetch("../../../mapa-interactivo-de-colima/assets/php/createReport.php", {
+    fetch("/mapa-interactivo-de-colima/assets/php/createReport.php", {
       method: "POST",
       body: formData,
     })
-      .then((response) => response.blob())
+      .then((response) => {
+        // Obtener la respuesta del servidor
+        if (!response.ok) {
+          // Si la respuesta no es correcta
+          throw new Error("Network response was not ok"); // Lanzar un error
+        }
+        return response.blob(); // Devolver la respuesta como un blob
+      })
       .then((blob) => {
         // Crear un URL temporal para el blob
         var url = window.URL.createObjectURL(blob);
