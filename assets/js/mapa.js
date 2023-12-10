@@ -1,4 +1,8 @@
-const bounds = L.geoJson(colimaGeoJson).getBounds(); // Obtener los límites del GeoJSON de Colima
+// Obtener los límites del GeoJSON de Colima
+const bounds = L.geoJson(colimaGeoJson).getBounds();
+
+// Objeto para almacenar las capas de overlay
+let overlays = {};
 
 let map = L.map("map", {
   minZoom: 11, // minZoom: 11 (default)
@@ -22,7 +26,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 L.geoJson(colimaGeoJson, {
   style: () => {
     return {
-      color: "#000000",
       opacity: 1,
       color: "black",
       dashArray: "5",
@@ -31,18 +34,50 @@ L.geoJson(colimaGeoJson, {
   },
 }).addTo(map);
 
-// Agregar el GeoJSON de AGEBS
-L.geoJson(agebsGeoJson, {
-  style: () => {
-    return {
-      color: "#000000",
-      opacity: 1,
-      color: "black",
-      dashArray: "5",
-      fillOpacity: 0,
-    };
+// // // Agregar el GeoJSON de AGEBS
+// // L.geoJson(agebsGeoJson, {
+// //   style: () => {
+// //     return {
+// //       opacity: 1,
+// //       color: "black",
+// //       dashArray: "5",
+// //       fillOpacity: 0,
+// //     };
+// //   },
+// // }).addTo(map);
+
+/* El código anterior crea una capa Leaflet GeoJSON llamada "agebLayerTooltip". Esta capa se completa
+con datos de la variable `agebsGeoJson`. */
+let agebLayerTooltip = L.geoJson(agebsGeoJson, {
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      // Si la característica tiene propiedades
+      const claveAGEB = feature.properties.CVEGEO
+        ? feature.properties.CVEGEO.slice(-4)
+        : "N/A"; // Obtener la clave AGEB
+
+      // Añadir el tooltip
+      layer
+        .bindTooltip(
+          // Mostrar el tooltip
+          "Clave AGEB" + "<br>" + "<strong>" + claveAGEB + "</strong>",
+          {
+            permanent: true, // El tooltip se muestra permanentemente
+            direction: "top", // El tooltip se muestra en la parte superior
+            className: "tooltip", // Añadir la clase al tooltip
+          }
+        )
+        .addTo(map); // Añadir el tooltip al mapa
+    }
+    layer.closeTooltip(); // Ocultar el tooltip
   },
-}).addTo(map);
+  style: {
+    // Estilo de la capa
+    fillColor: "#000000ff", // Color de fondo de la capa
+    opacity: 0, // Opacidad de la capa
+    fillOpacity: 0, // Opacidad del relleno de la capa
+  },
+});
 
 // Geocoder buscador en el mapa
 let geocoder = L.Control.geocoder({
@@ -60,18 +95,27 @@ let geocoder = L.Control.geocoder({
   })
   .addTo(map);
 
-// Objeto para almacenar las capas de overlay
-let overlays = {};
-
+// Lista de nombres de capas de AGEBs
 const LABELED_LIST = {
-    // Lista de nombres de capas de AGEBs
-    claveAGEB: "Clave AGEB",
-    POBTOT: "Población Total",
-    POBMAS: "Población Masculina",
-    POBFEM: "Población Femenina",
+    claveAGEB: {
+      label: "Clave AGEB",
+      unit: "",
+    },
+    POBTOT: {
+      label: "Población Total",
+      unit: "hab.",
+    },
+    POBMAS: {
+      label: "Población Masculina",
+      unit: "hab.",
+    },
+    POBFEM: {
+      label: "Población Femenina",
+      unit: "hab.",
+    },
   },
+  // Lista de capas de AGEBs
   AGEBS_LIST = {
-    // Lista de capas de AGEBs
     POBTOT: {
       overlayLayer: () => {
         return L.geoJson(agebsGeoJson, {
@@ -80,7 +124,7 @@ const LABELED_LIST = {
               AGEBS_LIST.POBTOT.colorScale(feature.properties.POBTOT)
             );
           },
-          onEachFeature: popupInfo,
+          onEachFeature: handleOnEachFeature,
         });
       },
       colorScale: (dim) => {
@@ -95,7 +139,7 @@ const LABELED_LIST = {
               AGEBS_LIST.POBMAS.colorScale(feature.properties.POBMAS)
             );
           },
-          onEachFeature: popupInfo,
+          onEachFeature: handleOnEachFeature,
         });
       },
       colorScale: (dim) => {
@@ -110,7 +154,7 @@ const LABELED_LIST = {
               AGEBS_LIST.POBFEM.colorScale(feature.properties.POBFEM)
             );
           },
-          onEachFeature: popupInfo,
+          onEachFeature: handleOnEachFeature,
         });
       },
       colorScale: (dim) => {
@@ -133,21 +177,41 @@ checkboxes.forEach((checkbox) => {
   }
 });
 
-// Función para que añada la capa al objeto de overlays
+/**
+ * La función `initializeLayer` agrega o elimina una capa superpuesta a un mapa según el estado de una
+ * casilla de verificación.
+ * @param checkboxId - El ID del elemento de la casilla de verificación que activará el evento de
+ * cambio.
+ * @param overlayLayer - El parámetro overlayLayer es la capa que desea agregar o eliminar del mapa.
+ * Podría ser una capa de marcador, una capa de mosaico, una capa de polígono o cualquier otro tipo de
+ * capa que se pueda agregar a un mapa.
+ * @param key - El parámetro clave es un identificador único para la capa superpuesta. Se utiliza para
+ * almacenar y recuperar la capa de superposición en el objeto de superposición.
+ */
 function initializeLayer(checkboxId, overlayLayer, key) {
   let checkbox = document.getElementById(checkboxId);
-  overlays[key] = overlayLayer;
 
   checkbox.addEventListener("change", function () {
     if (this.checked) {
+      overlays[key] = overlayLayer;
       overlayLayer.addTo(map);
     } else {
       map.removeLayer(overlays[key]); // Remueve la capa del mapa
+      delete overlays[key]; // Elimina la capa del objeto overlays
     }
   });
 }
 
-// Función para generar la escala de colores
+/**
+ * La función genera una escala de colores utilizando un color base y un número específico de pasos.
+ * @param baseColor - El parámetro baseColor es un código de color hexadecimal que sirve como punto de
+ * partida para generar la escala de colores.
+ * @param steps - El parámetro "pasos" representa la cantidad de colores que desea generar en la escala
+ * de colores. Determina la granularidad o el número de pasos entre el color base y el color final en
+ * la escala.
+ * @returns una matriz de colores generada usando Chroma.js con el color base especificado y el número
+ * de pasos.
+ */
 function generateColorScale(baseColor, steps) {
   // Para obtener las paletas de colores de brewer visite: https://colorbrewer2.org/
 
@@ -158,7 +222,16 @@ function generateColorScale(baseColor, steps) {
   return chroma.scale(baseColor).colors(steps);
 }
 
-// Función para obtener el color correspondiente al valor 'dim'
+/**
+ * La función `getColorByDim` toma un valor de dimensión y una matriz de escala de color, y devuelve el
+ * color correspondiente de la escala según el valor de la dimensión.
+ * @param dim - El parámetro "tenue" representa un valor numérico que se utiliza para determinar el
+ * color según una escala de colores.
+ * @param colorScale - El parámetro `colorScale` es una matriz de colores. Se utiliza para determinar
+ * el color en función del valor del parámetro "dim". La matriz debe contener al menos 8 colores, donde
+ * el primer color se usa cuando "dim" es menor o igual a 10, y
+ * @returns un color de la matriz `colorScale` basado en el valor del parámetro `dim`.
+ */
 function getColorByDim(dim, colorScale) {
   return dim > 1000
     ? colorScale[7]
@@ -177,7 +250,13 @@ function getColorByDim(dim, colorScale) {
     : colorScale[0];
 }
 
-// Función para devolver el estilo de la capa
+/**
+ * La función "returnStyle" devuelve un objeto con propiedades para aplicar estilo al color, la
+ * opacidad, el color del borde y la opacidad de relleno de una característica del mapa.
+ * @param colorScale - El parámetro colorScale es una variable que representa una escala de colores. Se
+ * utiliza para determinar el color de relleno de una forma u objeto.
+ * @returns un objeto con las siguientes propiedades: fillColor, opacity, color y fillOpacity.
+ */
 function returnStyle(colorScale) {
   return {
     fillColor: colorScale,
@@ -187,7 +266,38 @@ function returnStyle(colorScale) {
   };
 }
 
-// Función para mostrar la información de las AGEBS
+/**
+ * La función "handleOnEachFeature" se utiliza para manejar cada característica en una capa y mostrar
+ * su información.
+ * @param feature - El parámetro de característica representa la característica geográfica que se está
+ * procesando. Contiene información sobre la característica específica, como su geometría y
+ * propiedades.
+ * @param layer - El parámetro de capa es el objeto de capa Folleto que representa la característica en
+ * el mapa. Se utiliza para agregar la característica al mapa y aplicarle cualquier estilo o
+ * interacción.
+ */
+function handleOnEachFeature(feature, layer) {
+  popupInfo(feature, layer); // Mostrar la información de las AGEBS
+  // ...
+}
+
+/**
+ * La función overlaysIsEmpty comprueba si el objeto superpuesto está vacío.
+ * @returns un valor booleano que indica si el objeto "superposiciones" está vacío o no.
+ */
+function overlaysIsEmpty() {
+  // Función para verificar si el objeto overlays está vacío
+  return Object.keys(overlays).length === 0;
+}
+
+/**
+ * La función `popupInfo` crea una ventana emergente con información sobre una característica cuando se
+ * hace clic en ella.
+ * @param feature - El parámetro de característica representa la característica geográfica en la que se
+ * hizo clic. Podría ser un punto, una línea o un polígono en un mapa.
+ * @param layer - El parámetro de capa es el objeto de capa al que se adjunta la ventana emergente. Se
+ * utiliza para vincular la ventana emergente a la capa y abrirla cuando se hace clic en la capa.
+ */
 function popupInfo(feature, layer) {
   layer.on({
     // Evento click
@@ -199,13 +309,13 @@ function popupInfo(feature, layer) {
 
       let popupContent = "<h3>Información del AGEB</h3>";
       popupContent += "<ul>"; // Inicio de la lista
+
       for (const key in activeLayers) {
         // Iterar sobre las capas activas y añadir los datos a la lista
         if (activeLayers[key]) {
+          let value = dataLayers[0][key].toLocaleString("en-US");
           // Si la capa está activa
-          popupContent += `<li><strong>${
-            LABELED_LIST[key]
-          }:</strong> ${dataLayers[0][key].toLocaleString("en-US")}</li>`; // Añadir el dato a la lista
+          popupContent += `<li><strong>${LABELED_LIST[key]["label"]}:</strong> ${value} ${LABELED_LIST[key]["unit"]} </li>`; // Añadir el dato a la lista
         }
       }
       popupContent += "</ul>"; // Fin de la lista
@@ -264,7 +374,18 @@ document
       .catch((error) => console.error("Error:", error));
   });
 
-// Función para obtener las capas activas y los datos de las AGEBS
+/**
+ * La función `getActiveLayersAndData` toma una serie de características y un objeto de
+ * superposiciones, y devuelve un objeto que contiene las capas activas y sus datos correspondientes.
+ * @param features - Una matriz de características, donde cada característica representa una entidad
+ * geográfica con propiedades.
+ * @param overlays - El parámetro `overlays` es un objeto que representa las diferentes capas del mapa.
+ * Cada clave del objeto representa el nombre de una capa y el valor correspondiente es la capa misma.
+ * @returns un objeto con dos propiedades: "activeLayers" y "dataLayers". La propiedad "activeLayers"
+ * es un objeto que contiene las capas activas en el mapa, con la capa "claveAGEB" siempre establecida
+ * en verdadero. La propiedad "dataLayers" es una matriz de objetos, donde cada objeto representa los
+ * datos de una característica en la matriz "features".
+ */
 function getActiveLayersAndData(features, overlays) {
   let activeLayers = {
     claveAGEB: true, // Siempre mostramos la clave AGEB
@@ -296,24 +417,37 @@ function getActiveLayersAndData(features, overlays) {
   return { activeLayers, dataLayers };
 }
 
-// Función para construir la tabla HTML
+/**
+ * La función `buildTable` toma dos parámetros, `activeLayers` y `dataLayers`, y devuelve una tabla
+ * HTML formateada basada en los datos proporcionados.
+ * @param activeLayers - Un objeto que representa las capas activas. Las claves son los nombres de las
+ * capas y los valores son valores booleanos que indican si la capa está activa o no.
+ * @param dataLayers - El parámetro `dataLayers` es un objeto que contiene los datos de cada capa. Cada
+ * clave del objeto representa una capa, y el valor correspondiente es un objeto que contiene los datos
+ * de cada AGEB (Área Geoestadística Básica). La estructura del objeto `dataLayers`
+ * @returns una cadena que representa una tabla HTML.
+ */
 function buildTable(activeLayers, dataLayers) {
   let table =
-    "<hr> <h1>Reporte / AGEBS</h1> <table width='100%' border='1' style='text-align: center;'>";
-  table += "<tr>";
+    "<hr> <h1>Reporte / AGEBS</h1> <table width='100%' border='1' style='text-align: center;'>"; // Inicio de la tabla
+  table += `<tr>`; // Inicio de la fila
 
   // Iterar sobre las capas activas y añadir encabezados
   for (const agebLayer in activeLayers) {
     if (activeLayers.hasOwnProperty(agebLayer) && activeLayers[agebLayer]) {
-      table += `<th>${LABELED_LIST[agebLayer]}</th>`;
+      if (LABELED_LIST[agebLayer]["unit"] === "") {
+        table += `<th>${LABELED_LIST[agebLayer]["label"]}</th>`; // Añadir encabezado para la capa
+      } else {
+        table += `<th>${LABELED_LIST[agebLayer]["label"]} / ${LABELED_LIST[agebLayer]["unit"]}</th>`; // Añadir encabezado para la capa
+      }
     }
   }
 
-  table += "</tr>";
+  table += "</tr>"; // Fin de la fila
 
   // Iterar sobre los elementos de dataLayers
   for (const agebLayer in dataLayers) {
-    if (dataLayers.hasOwnProperty(agebLayer)) {
+    if (dataLayers.hasOwnProperty(agebLayer) && dataLayers[agebLayer]) {
       const AGEB = dataLayers[agebLayer];
       table += "<tr>";
 
@@ -323,10 +457,11 @@ function buildTable(activeLayers, dataLayers) {
           activeLayers.hasOwnProperty(activeLayer) &&
           activeLayers[activeLayer]
         ) {
-          const formattedValue = AGEB[activeLayer]
+          const value = AGEB[activeLayer]
             ? AGEB[activeLayer].toLocaleString("en-US")
             : "N/A";
-          table += `<td>${formattedValue}</td>`;
+
+          table += `<td>${value} ${LABELED_LIST[activeLayer]["unit"]} </td>`;
         }
       }
 
@@ -339,7 +474,10 @@ function buildTable(activeLayers, dataLayers) {
   return table;
 }
 
-// Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de capas
+/**
+ * La función toggleDropdown alterna la visualización de un menú desplegable y oculta otros menús si
+ * están abiertos.
+ */
 function toggleDropdown() {
   var dropdown = document.getElementById("dropdown");
   var dropdownMapas = document.getElementById("dropdownSubMapas");
@@ -352,7 +490,9 @@ function toggleDropdown() {
   dropdownMapas.style.display = "none";
 }
 
-// Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de mapas
+/**
+ * La función alterna la visualización de un menú desplegable.
+ */
 function toggleDropdownMapas() {
   var dropdownMapas = document.getElementById("dropdownSubMapas");
 
@@ -361,7 +501,10 @@ function toggleDropdownMapas() {
   ocultarOtrosMenus(dropdownMapas);
 }
 
-// Función para mostrar/ocultar el menú desplegable al hacer clic en el botón de medicion
+/**
+ * La función toggleDropdownMedicion alterna la visualización de un menú desplegable y oculta otros
+ * menús.
+ */
 function toggleDropdownMedicion() {
   var dropdownMedicion = document.getElementById("dropdownMedicion");
   var dropdownMapas = document.getElementById("dropdownSubMapas");
@@ -372,25 +515,41 @@ function toggleDropdownMedicion() {
   ocultarOtrosMenus(dropdownMedicion);
 }
 
+/**
+ * La función toggleDropdown1 alterna la visualización de un elemento con el ID "dropdown1" entre
+ * "bloque" y "ninguno".
+ */
 function toggleDropdown1() {
   var dropdown1 = document.getElementById("dropdown1");
   dropdown1.style.display =
     dropdown1.style.display === "block" ? "none" : "block";
 }
 
+/**
+ * La función toggleDropdown2 alterna la visualización de un elemento con el ID "dropdown2" entre
+ * "bloque" y "ninguno".
+ */
 function toggleDropdown2() {
   var dropdown2 = document.getElementById("dropdown2");
   dropdown2.style.display =
     dropdown2.style.display === "block" ? "none" : "block";
 }
 
+/**
+ * La función toggleDropdown3 alterna la visualización de un elemento con el ID "dropdown3" entre
+ * "bloque" y "ninguno".
+ */
 function toggleDropdown3() {
   var dropdown3 = document.getElementById("dropdown3");
   dropdown3.style.display =
     dropdown3.style.display === "block" ? "none" : "block";
 }
 
-// Función para ocultar todos los menús excepto el proporcionado
+/**
+ * La función "ocultarOtrosMenus" oculta todos los menús excepto el especificado como parámetro
+ * "menuActual".
+ * @param menuActual - El parámetro "menuActual" es el menú actualmente activo o seleccionado.
+ */
 function ocultarOtrosMenus(menuActual) {
   var menus = document.querySelectorAll(
     ".dropdown, .dropdown1, .dropdown2, .dropdown3, .dropdownSubMapas"
@@ -402,6 +561,9 @@ function ocultarOtrosMenus(menuActual) {
   });
 }
 
+/**
+ * La función "ocultarMenu" oculta múltiples menús desplegables en una página web.
+ */
 function ocultarMenu() {
   var dropdown1 = document.getElementById("dropdown1");
   var dropdown2 = document.getElementById("dropdown2");
@@ -413,6 +575,8 @@ function ocultarMenu() {
   dropdownSubMapas.style.display = "none";
 }
 
+/* El código anterior agrega un detector de eventos al evento "DOMContentLoaded". Cuando el contenido
+DOM haya terminado de cargarse, se llamará a la función "ocultarMenu". */
 document.addEventListener("DOMContentLoaded", ocultarMenu);
 
 // Mapas Base
@@ -437,6 +601,12 @@ let topoMap = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenTopoMap contributors",
 });
 
+/**
+ * La función "cambiarMapa" cambia la capa del mapa base en un mapa de Folleto según el tipo de
+ * entrada.
+ * @param tipo - El parámetro "tipo" es una cadena que representa el tipo de mapa al que se cambiará.
+ * Puede tener uno de los siguientes valores: "WorldImagery", "WorldStreetMap" o "TopoMap".
+ */
 function cambiarMapa(tipo) {
   // Eliminar solo las capas correspondientes al mapa base anterior
   switch (tipo) {
@@ -490,11 +660,34 @@ map.on("mousemove", function (e) {
     e.latlng.lng.toFixed(6);
 });
 
+/* El código anterior agrega un control de escala a un mapa en JavaScript. El control de escala está
+ubicado en la esquina inferior izquierda del mapa. Está configurado para mostrar unidades métricas
+(kilómetros) y no muestra unidades imperiales. */
 L.control
   .scale({
-    position: "bottomleft",
-    metric: true,
-    imperial: false,
-    units: "kilometers",
+    maxWidth: 200, // Ancho máximo del control de escala
+    position: "bottomleft", // Posición del control de escala
+    metric: true, // Mostrar unidades métricas
+    imperial: false, // No mostrar unidades imperiales
+    units: "kilometers", // Las unidades se muestran en kilómetros
+    updateWhenIdle: true, // Actualizar la escala solo cuando el mapa esté inactivo
   })
   .addTo(map);
+
+// Añadir el evento zoomend al mapa para controlar la visibilidad de los tooltips
+map.on("zoomend", function () {
+  let currentZoom = map.getZoom(),
+    zoomTooltips = 14;
+
+  if (currentZoom >= zoomTooltips && !overlaysIsEmpty()) {
+    // Mostrar los tooltips
+    agebLayerTooltip.eachLayer(function (layer) {
+      layer.openTooltip();
+    });
+  } else {
+    // Ocultar los tooltips
+    agebLayerTooltip.eachLayer(function (layer) {
+      layer.closeTooltip();
+    });
+  }
+});
