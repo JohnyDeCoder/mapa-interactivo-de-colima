@@ -1,5 +1,5 @@
-// Obtener los límites del GeoJSON de Colima
-const bounds = L.geoJson(colimaGeoJson).getBounds();
+const bounds = L.geoJson(colimaGeoJson).getBounds(), // Obtener los límites del GeoJSON de Colima
+  url = window.location.href; // Obtener la URL de la página
 
 // Objeto para almacenar las capas de overlay
 let overlays = {};
@@ -353,7 +353,7 @@ document
     formData.append("tablaAGEBs", tableHTML);
 
     // Enviar los datos al archivo PHP mediante POST
-    fetch("/mapa-interactivo-de-colima/assets/php/createReport.php", {
+    fetch(url + "/assets/php/createReport.php", {
       method: "POST",
       body: formData,
     })
