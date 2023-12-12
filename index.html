@@ -240,42 +240,10 @@
           }
         });
       }
-
-      /**
-       * La función "cambiarMapa" cambia la capa del mapa base en un mapa de Folleto según el tipo de
-       * entrada.
-       * @param tipo - El parámetro "tipo" es una cadena que representa el tipo de mapa al que se cambiará.
-       * Puede tener uno de los siguientes valores: "WorldImagery", "WorldStreetMap" o "TopoMap".
-       */
-      function cambiarMapa(tipo) {
-        // Eliminar solo las capas correspondientes al mapa base anterior
-        switch (tipo) {
-          case "WorldImagery":
-            map.eachLayer(function (layer) {
-              if (layer instanceof L.TileLayer) {
-                map.removeLayer(layer);
-              }
-            });
-            worldImagery.addTo(map);
-            break;
-          case "WorldStreetMap":
-            map.eachLayer(function (layer) {
-              if (layer instanceof L.TileLayer) {
-                map.removeLayer(layer);
-              }
-            });
-            worldStreetMap.addTo(map);
-            break;
-          case "TopoMap":
-            map.eachLayer(function (layer) {
-              if (layer instanceof L.TileLayer) {
-                map.removeLayer(layer);
-              }
-            });
-            topoMap.addTo(map);
-            break;
-        }
-      }
+    </script>
+    <script type="module">
+      import { cambiarMapa } from "./assets/js/main.js";
+      window.cambiarMapa = cambiarMapa;
     </script>
     <script type="module" src="assets/js/main.js"></script>
   </body>
