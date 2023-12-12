@@ -1,4 +1,4 @@
-const agebsGeoJson = {
+export const agebsGeoJson = {
   type: "FeatureCollection",
   features: [
     {

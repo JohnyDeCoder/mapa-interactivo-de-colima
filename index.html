@@ -153,8 +153,130 @@
     <!-- Libreria de chroma.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
     <!-- Link de archivo js app -->
-    <script src="assets/js/colima.js"></script>
-    <script src="assets/js/agebs.js"></script>
-    <script src="assets/js/mapa.js"></script>
+    <script>
+      /**
+       * La función toggleDropdown alterna la visualización de un menú desplegable y oculta otros menús si
+       * están abiertos.
+       */
+      function toggleDropdown() {
+        var dropdown = document.getElementById("dropdown");
+        var dropdownMapas = document.getElementById("dropdownSubMapas");
+
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+        ocultarOtrosMenus(dropdown);
+
+        // Ocultar otros menús si están abiertos
+        dropdownMapas.style.display = "none";
+      }
+
+      /**
+       * La función alterna la visualización de un menú desplegable.
+       */
+      function toggleDropdownMapas() {
+        var dropdownMapas = document.getElementById("dropdownSubMapas");
+
+        dropdownMapas.style.display =
+          dropdownMapas.style.display === "block" ? "none" : "block";
+        ocultarOtrosMenus(dropdownMapas);
+      }
+
+      /**
+       * La función toggleDropdownMedicion alterna la visualización de un menú desplegable y oculta otros
+       * menús.
+       */
+      function toggleDropdownMedicion() {
+        var dropdownMedicion = document.getElementById("dropdownMedicion");
+        var dropdownMapas = document.getElementById("dropdownSubMapas");
+
+        dropdownMedicion.style.display =
+          dropdownMedicion.style.display === "block" ? "none" : "block";
+        dropdownMapas.style.display = "none"; // Oculta el menú de mapas
+        ocultarOtrosMenus(dropdownMedicion);
+      }
+
+      /**
+       * La función toggleDropdown1 alterna la visualización de un elemento con el ID "dropdown1" entre
+       * "bloque" y "ninguno".
+       */
+      function toggleDropdown1() {
+        var dropdown1 = document.getElementById("dropdown1");
+        dropdown1.style.display =
+          dropdown1.style.display === "block" ? "none" : "block";
+      }
+
+      /**
+       * La función toggleDropdown2 alterna la visualización de un elemento con el ID "dropdown2" entre
+       * "bloque" y "ninguno".
+       */
+      function toggleDropdown2() {
+        var dropdown2 = document.getElementById("dropdown2");
+        dropdown2.style.display =
+          dropdown2.style.display === "block" ? "none" : "block";
+      }
+
+      /**
+       * La función toggleDropdown3 alterna la visualización de un elemento con el ID "dropdown3" entre
+       * "bloque" y "ninguno".
+       */
+      function toggleDropdown3() {
+        var dropdown3 = document.getElementById("dropdown3");
+        dropdown3.style.display =
+          dropdown3.style.display === "block" ? "none" : "block";
+      }
+
+      /**
+       * La función "ocultarOtrosMenus" oculta todos los menús excepto el especificado como parámetro
+       * "menuActual".
+       * @param menuActual - El parámetro "menuActual" es el menú actualmente activo o seleccionado.
+       */
+      function ocultarOtrosMenus(menuActual) {
+        var menus = document.querySelectorAll(
+          ".dropdown, .dropdown1, .dropdown2, .dropdown3, .dropdownSubMapas"
+        );
+        menus.forEach(function (menu) {
+          if (menu !== menuActual) {
+            menu.style.display = "none";
+          }
+        });
+      }
+
+      /**
+       * La función "cambiarMapa" cambia la capa del mapa base en un mapa de Folleto según el tipo de
+       * entrada.
+       * @param tipo - El parámetro "tipo" es una cadena que representa el tipo de mapa al que se cambiará.
+       * Puede tener uno de los siguientes valores: "WorldImagery", "WorldStreetMap" o "TopoMap".
+       */
+      function cambiarMapa(tipo) {
+        // Eliminar solo las capas correspondientes al mapa base anterior
+        switch (tipo) {
+          case "WorldImagery":
+            map.eachLayer(function (layer) {
+              if (layer instanceof L.TileLayer) {
+                map.removeLayer(layer);
+              }
+            });
+            worldImagery.addTo(map);
+            break;
+          case "WorldStreetMap":
+            map.eachLayer(function (layer) {
+              if (layer instanceof L.TileLayer) {
+                map.removeLayer(layer);
+              }
+            });
+            worldStreetMap.addTo(map);
+            break;
+          case "TopoMap":
+            map.eachLayer(function (layer) {
+              if (layer instanceof L.TileLayer) {
+                map.removeLayer(layer);
+              }
+            });
+            topoMap.addTo(map);
+            break;
+        }
+      }
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

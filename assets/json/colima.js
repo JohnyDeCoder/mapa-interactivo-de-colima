@@ -1,4 +1,4 @@
-const colimaGeoJson = {
+export const colimaGeoJson = {
   type: "FeatureCollection",
   features: [
     {
