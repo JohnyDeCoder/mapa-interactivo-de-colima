@@ -1,19 +1,19 @@
 // Importar el GeoJSON de AGEBS y Colima
-import { agebsGeoJson } from "../json/agebs";
-import { colimaGeoJson } from "../json/colima";
+import { agebsGeoJson } from "../json/agebs.js";
+import { colimaGeoJson } from "../json/colima.js";
 
 // Importar las constantes
-import { AGEBS_LIST } from "./constants";
+import { AGEBS_LIST } from "./constants.js";
 
 // Importar las funciones de las capas
 import {
   overlaysIsEmpty,
   initializeLayer,
   getActiveLayersAndData,
-} from "./layersFunctions";
+} from "./layersFunctions.js";
 
 // Importar las funciones para crear la tabla
-import { buildTable } from "./tableReport";
+import { buildTable } from "./tableReport.js";
 
 export const bounds = L.geoJson(colimaGeoJson).getBounds(), // Obtener los límites del GeoJSON de Colima
   url = window.location.href, // Obtener la URL de la página
@@ -236,7 +236,7 @@ document
     formData.append("tablaAGEBs", tableHTML);
 
     // Enviar los datos al archivo PHP mediante POST
-    fetch(url + "/assets/php/createReport.php", {
+    fetch(url + "assets/php/createReport.php", {
       method: "POST",
       body: formData,
     })

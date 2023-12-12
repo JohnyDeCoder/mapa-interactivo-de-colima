@@ -1,6 +1,10 @@
-import { agebsGeoJson } from "../json/agebs";
-import { getColorByDim, generateColorScale, returnStyle } from "./styleLayer";
-import { handleOnEachFeature } from "./onEachFeature";
+import { agebsGeoJson } from "../json/agebs.js";
+import {
+  getColorByDim,
+  generateColorScale,
+  returnStyle,
+} from "./styleLayer.js";
+import { handleOnEachFeature } from "./onEachFeature.js";
 
 // Lista de nombres de capas de AGEBs
 export const LABELED_LIST = {
