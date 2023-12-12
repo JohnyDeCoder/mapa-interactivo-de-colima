@@ -1,0 +1,49 @@
+ * {
+     font-family: Roboto, sans-serif;
+ }
+
+ /* Estilos generales para la tabla */
+ table {
+     width: 100%;
+     border-collapse: collapse;
+ }
+
+ /* Estilos para los encabezados de la tabla */
+ th {
+     background-color: #5080bf;
+     /* Color de fondo azul */
+     color: white;
+     /* Texto blanco */
+     padding: 10px;
+     border: 1px solid #ddd;
+     /* Bordes grises */
+ }
+
+ /* Estilos para las celdas de la tabla */
+ td {
+     padding: 10px;
+     border: 1px solid #ddd;
+     /* Bordes grises */
+     text-align: center;
+     /* AlineaciÃ³n del texto al centro */
+ }
+
+ /* Estilos para las filas impares */
+ tr:nth-child(odd) {
+     background-color: #ffffff;
+     /* Color de fondo blanco */
+ }
+
+ /* Estilos para las filas pares */
+ tr:nth-child(even) {
+     background-color: #d3dfef;
+     /* Color de fondo azul */
+     color: white;
+     /* Texto blanco */
+
+ }
+
+ h1 {
+     color: #2c7fb8;
+     font-size: 50px;
+ }
