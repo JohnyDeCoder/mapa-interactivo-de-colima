@@ -248,4 +248,229 @@ export const LABELED_LIST = {
         return getColorByDim(dim, generateColorScale("RdPu", 8));
       },
     },
+    P_0A2: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_0A2.colorScale(feature.properties.P_0A2)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("BuGn", 8));
+      },
+    },
+    P_0A2_F: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_0A2_F.colorScale(feature.properties.P_0A2_F)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("BuPu", 8));
+      },
+    },
+    P_0A2_M: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_0A2_M.colorScale(feature.properties.P_0A2_M)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("GnBu", 8));
+      },
+    },
+    P_3YMAS: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_3YMAS.colorScale(feature.properties.P_3YMAS)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("OrRd", 8));
+      },
+    },
+    P_3YMAS_F: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_3YMAS_F.colorScale(feature.properties.P_3YMAS_F)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("PuBu", 8));
+      },
+    },
+    P_3YMAS_M: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_3YMAS_M.colorScale(feature.properties.P_3YMAS_M)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("Greys", 8));
+      },
+    },
+    P_5YMAS: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_5YMAS.colorScale(feature.properties.P_5YMAS)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("PuBuGn", 8));
+      },
+    },
+    P_5YMAS_F: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_5YMAS_F.colorScale(feature.properties.P_5YMAS_F)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("PuRd", 8));
+      },
+    },
+    P_5YMAS_M: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_5YMAS_M.colorScale(feature.properties.P_5YMAS_M)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("Blues", 8));
+      },
+    },
+    P_12YMAS: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_12YMAS.colorScale(feature.properties.P_12YMAS)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("Greens", 8));
+      },
+    },
+    P_12YMAS_F: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_12YMAS_F.colorScale(feature.properties.P_12YMAS_F)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("PuRd", 8));
+      },
+    },
+    P_12YMAS_M: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_12YMAS_M.colorScale(feature.properties.P_12YMAS_M)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("YlGnBu", 8));
+      },
+    },
+    P_15YMAS: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_15YMAS.colorScale(feature.properties.P_15YMAS)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("YlOrBr", 8));
+      },
+    },
+    P_15YMAS_F: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_15YMAS_F.colorScale(feature.properties.P_15YMAS_F)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("Purples", 8));
+      },
+    },
+    P_15YMAS_M: {
+      overlayLayer: () => {
+        return L.geoJson(agebsGeoJson, {
+          style: (feature) => {
+            return returnStyle(
+              AGEBS_LIST.P_15YMAS_M.colorScale(feature.properties.P_15YMAS_M)
+            );
+          },
+          onEachFeature: handleOnEachFeature,
+        });
+      },
+      colorScale: (dim) => {
+        return getColorByDim(dim, generateColorScale("YlGnBu", 8));
+      },
+    },
   };
