@@ -410,7 +410,7 @@ export const LABELED_LIST = {
         });
       },
       colorScale: (dim) => {
-        return getColorByDim(dim, generateColorScale("PuRd", 8));
+        return getColorByDim(dim, generateColorScale("RdPu", 8));
       },
     },
     P_12YMAS_M: {
