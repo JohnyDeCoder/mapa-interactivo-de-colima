@@ -112,6 +112,8 @@ html {
     left: 100px;
     top: 90px;
     width: 250px;
+    max-height: 500px; /* O el valor que prefieras */
+    overflow-y: auto;
 }
 
 /* Estilos para el menú desplegable mapas*/
@@ -265,3 +267,9 @@ html {
         display: none;
     }
 }
+
+.dropdown1 {
+    max-height: 200px; /* O el valor que prefieras */
+    overflow-y: auto;
+  }
+  
