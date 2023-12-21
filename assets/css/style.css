@@ -1,24 +1,137 @@
+/* HEADER */
+
+header {
+    display: flex;
+    align-items: center; 
+    text-align: center; 
+    background-color: #095a89;
+    height: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1003;
+  }
+
+  .btn-satelite {
+    width: 80px;
+    height:37px;
+    color: #000000;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    cursor: pointer;
+    top: 675px;
+    right: 90px; 
+    z-index: 1001;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: fixed !important;
+  }
+
+  .btn-satelite:hover {
+    font-weight: bold;
+  }
+
+  .btn-mapa {
+    width: 80px;
+    height:37px;
+    color: #000000;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    top: 675px;
+    right: 20px; 
+    z-index: 1001;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: fixed !important;
+  }
+
+  .btn-mapa:hover {
+    font-weight: bold;
+  }
+
+.img-header {
+     margin-right: 10px;
+     margin-left: 35px;
+  }
+
+.titulo-mapa-interactivo {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 19px;
+    font-size: 25px;
+    margin-top: 15px; 
+}
+
+.INEGI-2020 {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: 13px;
+    margin-left: -25rem;
+    margin-top: -26px;
+}
+
+/* LEAFLET */
+
 .leaflet-control-geocoder,
 .leaflet-control-geocoder-icon {
-    border-radius: 20px !important;
+    border-radius: 50px !important;
+
 }
 
 .leaflet-control-geocoder-icon {
     width: 40px !important;
     height: 40px !important;
+    background: url('https://api.iconify.design/mingcute/search-fill.svg?width=50&height=50') no-repeat center center / contain !important;
+    background-size: 32px !important;
 }
+
+
 
 .leaflet-control-geocoder {
     top: 90px;
 }
 
 /* Estilo para el zoom del mapa */
-.leaflet-left .leaflet-control-zoom {
-    position: absolute !important;
-    margin-top: 20px;
-    margin-left: 25px;
+.leaflet-control-zoom {
+    position: fixed !important;
+    bottom: 90px; /* Ajusta este valor según tus preferencias */
+    right: 10px; /* Ajusta este valor según tus preferencias */
 }
 
+/* Estilo control imprimir mapa */
+
+.leaflet-browser-print {
+    position: fixed !important;
+    bottom: 100px; /* Ajusta este valor según tus preferencias */
+    right: 62px; /* Ajusta este valor según tus preferencias */
+    background: url('https://api.iconify.design/ph/printer-fill.svg?color=black&back&width=50&height=50') no-repeat center center / contain !important;
+    background-color: #fff!important;
+    border-radius: 40px !important;
+    height: 45px !important;
+    width: 45px !important;
+}
+
+.browser-print-holder {
+    position: relative !important;
+    bottom: 110px !important;
+    right:155px !important; 
+    background-color: #095a89 !important;
+    height: 20px !important;
+}
+
+.browser-print-holder:hover {
+    background-color: #0c4464 !important;
+}
+
+.leaflet-control-print-mode {
+    bottom: 100px;
+}
 
 .img-logo {
     z-index: 1000;
@@ -28,15 +141,14 @@
     left: 1239px;
 }
 
-#map {
-    height: 100%;
-}
-
-
-body,
-html {
+body, html {
     height: 100%;
     margin: 0;
+    overflow: hidden;
+}
+
+#map {
+    height: calc(100% - 60px); /* Resta el tamaño del header */
 }
 
 /* Estilos para el botón circular capas */
@@ -53,12 +165,11 @@ html {
     left: 30px;
     top: 110px;
     z-index: 1000;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("../img/capas.png");
-
-    background-size: 70%
+    display: flex; /* Usar flexbox para centrar contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
 }
+
 
 /* Estilos para el botón circular mapa*/
 .circular-button-mapa {
@@ -272,4 +383,4 @@ html {
     max-height: 200px; /* O el valor que prefieras */
     overflow-y: auto;
   }
-  
+

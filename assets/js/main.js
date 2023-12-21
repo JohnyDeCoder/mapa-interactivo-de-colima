@@ -127,7 +127,9 @@ checkboxes.forEach((checkbox) => {
 });
 
 // Funcionalidad para imprimir mapa
-L.control.browserPrint().addTo(map);
+L.control.browserPrint({
+  position: 'bottomright',
+}).addTo(map);
 
 // Agregar un contenedor para mostrar las coordenadas
 let coordinatesContainer = L.DomUtil.create("div", "coordinates-container");

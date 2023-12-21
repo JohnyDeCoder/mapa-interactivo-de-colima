@@ -18,15 +18,38 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css"
     />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;800&display=swap" rel="stylesheet"> 
+    <!-- Titulo -->
     <title>MI COLIMA - Mapa</title>
   </head>
   <body>
-    <div>
-      <img class="img-logo" src="assets/img/logo.png" alt="logo-colima" />
-    </div>
+
+
+    <header>
+      <div class="img-header">
+        <iconify-icon icon="material-symbols:map" style="color: white;" width="50" height="50"></iconify-icon>
+      </div>
+      
+      <div class="texto-header">
+      <p class="titulo-mapa-interactivo">Mapa interactivo del municipio de colima</p>
+      <p class="INEGI-2020">Fuente de consulta INEGI 2020</p>
+      </div>
+      
+    </header>
+
+   
+      <button class="btn-satelite" onclick="cambiarMapa('WorldImagery')">Satelite</button>
+      <button class="btn-mapa" onclick="cambiarMapa('WorldStreetMap')">Mapa</button>
+      
+   
 
     <!-- Botón circular para capas -->
-    <button class="circular-button-capas" onclick="toggleDropdown()"></button>
+    <button class="circular-button-capas" onclick="toggleDropdown()">
+      <iconify-icon icon="fluent:layer-24-filled" style="color: black;" width="50" height="50"></iconify-icon>
+    </button>
 
     <!-- Menú desplegable con opciones de checkbox para boton de capas-->
     <div id="dropdown" class="dropdown">
@@ -175,13 +198,13 @@
     </div>
 
     <!-- Botón circular para mapas -->
-    <button
+    <!-- <button
       class="circular-button-mapa"
       onclick="toggleDropdownMapas()"
-    ></button>
+    ></button> -->
 
     <!-- Menú desplegable con opciones de checkbox para boton de mapas-->
-    <div id="dropdownSubMapas" class="dropdownSubMapas">
+    <!-- <div id="dropdownSubMapas" class="dropdownSubMapas">
       <ul class="options-list">
         <div clas="cont-btn-imagery">
           <button class="btn-mapas" onclick="cambiarMapa('WorldImagery')">
@@ -202,7 +225,7 @@
           <img class="img-topo" src="assets/img/topo.png" alt="topo" />
         </div>
       </ul>
-    </div>
+    </div> -->
 
     <button id="generarReporte" class="circular-button-imprimir"></button>
 
@@ -314,5 +337,6 @@
       window.cambiarMapa = cambiarMapa;
     </script>
     <script type="module" src="assets/js/main.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   </body>
 </html>
