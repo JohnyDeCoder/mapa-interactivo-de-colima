@@ -51,6 +51,7 @@ L.Control.geocoder({
       bbox.getSouthWest(),
     ]).addTo(map);
     map.fitBounds(poly.getBounds());
+    
   })
   .addTo(map);
 

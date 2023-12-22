@@ -8,7 +8,56 @@ header {
     height: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     z-index: 1003;
+    transition: height 0.5s ease;
+  }  
+
+  .img-header {
+    margin-right: 10px;
+    margin-left: 35px;
   }
+
+
+  .half-circle-btn {
+    width: 40px;
+    height: 20px; 
+    background-color: rgb(255, 255, 255) !important;
+    background: url('https://api.iconify.design/iconamoon/arrow-up-2.svg?width=30&height=30') no-repeat center center / contain;
+    border: none;
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    z-index: 1001;
+    cursor: pointer;
+    position: fixed !important;
+    top: 60px !important;
+    right: 50%; 
+    transition: top 0.5s ease;
+  }
+
+  .half-circle-btn2 {
+    width: 40px;
+    height: 20px; 
+    background-color: rgb(255, 255, 255) !important;
+    background: url('https://api.iconify.design/iconamoon/arrow-up-2.svg?width=20&height=20&rotate=180deg') no-repeat center center / contain;
+    border: none;
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    z-index: 1001;
+    cursor: pointer;
+    position: fixed !important;
+    top: 0px !important;
+    right: 50%; 
+    transition: top 0.5s ease;
+  }
+
+  #toggle-header-btn.new-style-btn {
+    background-color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.5s ease; /* Agregar transición para animar el movimiento del botón */
+}
+  
 
   .btn-satelite {
     width: 80px;
@@ -50,10 +99,13 @@ header {
     font-weight: bold;
   }
 
-.img-header {
-     margin-right: 10px;
-     margin-left: 35px;
-  }
+
+.img-logocolima {
+    
+    margin-left: 600px;
+    width: 140px; 
+    height: 50px;
+}
 
 .titulo-mapa-interactivo {
     color: white;
@@ -76,6 +128,46 @@ header {
     margin-top: -26px;
 }
 
+/* Estilo Checkbox */
+
+.checkbox-hidden {
+  /* Oculta la casilla de verificación predeterminada */
+  display: none;
+}
+
+.custom-checkbox {
+  /* Define el tamaño y otros estilos para el contenedor del icono */
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position:static;
+}
+
+/* Estilo para el icono cuando la casilla está seleccionada */
+.custom-checkbox::before {
+  content: url('https://api.iconify.design/ph/eye.svg?width=20&height=20&rotate=180deg');
+  display: block;
+}
+
+/* Estilo para el icono cuando la casilla no está seleccionada */
+.custom-checkbox::after {
+  content: url('https://api.iconify.design/mdi/eye.svg?width=20&height=20&rotate=180deg');
+  display: none;
+}
+
+/* Cambia la apariencia de los iconos cuando la casilla está marcada */
+.checkbox-hidden:checked + .custom-checkbox::before {
+  display: none;
+}
+
+.checkbox-hidden:checked + .custom-checkbox::after {
+  display: block;
+}
+
+
+
 /* LEAFLET */
 
 .leaflet-control-geocoder,
@@ -92,10 +184,69 @@ header {
 }
 
 
+  /* ... buscador  ... */
+  
+  .leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
+    display: inline-block;
+    position: absolute;
+    left: 50px; 
+    top: 5px;
+    background-color: #ffffff;
+    height: 30px;
+    border-radius: 5px;
+  }
 
-.leaflet-control-geocoder {
-    top: 90px;
+/* Estilo para centrar verticalmente el placeholder */
+.leaflet-control-geocoder-form input::placeholder {
+    color: #000000; /* Color del texto del placeholder */
+    opacity: 1; /* Opacidad completa para el placeholder */
+    display: flex;
+    align-items: center;
+    line-height: 1; /* Esto puede ayudar a centrar el texto verticalmente */
+  }
+  
+  /* Estilo para el campo de entrada */
+  .leaflet-control-geocoder-form input {
+    font-size: 120%;
+    border: 0;
+    width: 246px;
+    height: 100%; /* Esto asegura que el campo de entrada ocupa toda la altura del contenedor */
+    box-sizing: border-box;
+    padding: 0; /* Elimina el relleno predeterminado del campo de entrada */
+  }
+
+  .leaflet-control-geocoder-expanded .leaflet-control-geocoder-alternatives {
+    left: 50px;
+    display: inline-block;
+    position: absolute;
+    top: 40px;
+    background-color: #fff !important;
+    border-radius: 5px;
+  }
+
+ .leaflet-control-geocoder {
+    position: fixed !important;
+    top: 170px;
+    right: 1450px;
+} 
+
+.leaflet-control-geocoder-alternatives li:hover,
+.leaflet-control-geocoder-selected {
+  background-color: #ffffff;
 }
+
+.leaflet-control-geocoder-alternatives li {
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    padding: 5px 8px;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
 
 /* Estilo para el zoom del mapa */
 .leaflet-control-zoom {
@@ -149,7 +300,14 @@ body, html {
 
 #map {
     height: calc(100% - 60px); /* Resta el tamaño del header */
+    transition: height 0.5s ease;
 }
+
+#map2 {
+    height:100% ; /* Resta el tamaño del header */
+    transition: height 0.5s ease;
+}
+
 
 /* Estilos para el botón circular capas */
 .circular-button-capas {
@@ -215,44 +373,17 @@ body, html {
 .dropdown {
     display: none;
     position: absolute;
-    background-color: #19222b;
+    background-color: #ffffff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
     z-index: 1000;
     left: 100px;
     top: 90px;
-    width: 250px;
+    width: 350px;
     max-height: 500px; /* O el valor que prefieras */
     overflow-y: auto;
-}
-
-/* Estilos para el menú desplegable mapas*/
-.dropdownSubMapas {
-    display: none;
-    position: absolute;
-    background-color: #19222b;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 10px;
-    z-index: 1000;
-    left: 100px;
-    top: 90px;
-    width: 250px;
-}
-
-/* Estilos para el menú desplegable medicion*/
-.dropdownMedicion {
-    display: none;
-    position: absolute;
-    background-color: #19222b;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 10px;
-    z-index: 1000;
-    left: 100px;
-    top: 90px;
-    width: 250px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 
@@ -260,74 +391,67 @@ body, html {
 .options-list {
     list-style: none;
     padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
     margin: 0;
     z-index: 1000;
-    background-color: #fff;
-    border-radius: 10px;
+    background-color: #ffffff;
+    border-radius: 20px;
 }
 
 .options-list li {
     margin-bottom: 5px;
     z-index: 1000;
+    border-radius: 20px;
+}
+
+.options-list1 {
+    background-color: #71c1f0;
     border-radius: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.options-list1 li {
+    background-color: #abe0ff;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 8px;
+    list-style: none;
+    margin-left: -30px;
 }
 
 .boton-poblacion {
     width: 185px;
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 5px;
-    background-color: #04f997;
-    margin-bottom: 8px;
-    border: solid black 3px;
+    padding-left: 15px;
+    padding-right: 305px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin-left: 3px;
+    border-radius: 10px;
+    background-color: #095a89;
+    color: #fff;
+    border: none;
+    margin-bottom: 3px;
+    margin-top: -10px;
 }
 
-.boton-mapa {
-    width: 185px;
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 5px;
-    background-color: #04f997;
-    margin-bottom: 20px;
-    border: solid black 3px;
-    margin-top: 8px;
-}
 
 .boton-educacion {
     width: 185px;
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 5px;
-    background-color: #04f997;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    border: solid black 3px;
-}
-
-/* Estilo para boton de mapa imagery */
-.btn-mapas {
-    width: 185px;
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 5px;
-    background-color: #04f997;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    border: solid black 3px;
-}
-
-.img-imagery,
-.img-topo,
-.img-world {
-    padding-left: 90px;
+    padding-left: 15px;
+    padding-right: 305px;
+    padding-top: 15px;
     padding-bottom: 10px;
-}
-
-
-/* Estilo para boton de mediciones y area */
-.img-longitud,
-.img-area {
-    padding-left: 90px;
+    margin-left: 3px;
+    border-radius: 10px;
+    background-color: #095a89;
+    color: #fff;
+    border: none;
+    margin-bottom: 3px;
+    margin-top: 10px;
 }
 
 

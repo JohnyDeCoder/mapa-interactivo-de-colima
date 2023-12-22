@@ -11,7 +11,7 @@
       crossorigin=""
     />
     <!-- Link de archivo CSS -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/print.css" />
     <!-- Libreria geocoder buscador -->
     <link
@@ -28,17 +28,19 @@
   <body>
 
 
-    <header>
+    <header id="main-header">
       <div class="img-header">
         <iconify-icon icon="material-symbols:map" style="color: white;" width="50" height="50"></iconify-icon>
       </div>
-      
       <div class="texto-header">
       <p class="titulo-mapa-interactivo">Mapa interactivo del municipio de colima</p>
       <p class="INEGI-2020">Fuente de consulta INEGI 2020</p>
       </div>
+      <img class="img-logocolima" src="assets/img/logo.png" alt=""> 
       
     </header>
+
+    <button class="half-circle-btn" id="toggle-header-btn"></button>
 
    
       <button class="btn-satelite" onclick="cambiarMapa('WorldImagery')">Satelite</button>
@@ -67,210 +69,241 @@
         <div id="dropdown1" class="dropdown1">
           <ul class="options-list1">
             <li>
-              <input type="checkbox" id="POBTOT" />
-              <label for="POBTOT">Población Total</label>
+              <input type="checkbox" id="POBTOT" class="checkbox-hidden" />
+              <label for="POBTOT" class="custom-checkbox"></label>
+              <span>Población Total</span>
             </li>
             <li>
-              <input type="checkbox" id="POBMAS" />
-              <label for="POBMAS">Población Masculina</label>
+              <input type="checkbox" id="POBMAS" class="checkbox-hidden" />
+              <label for="POBMAS" class="custom-checkbox"></label>
+              <span>Población Masculina</span>
             </li>
             <li>
-              <input type="checkbox" id="POBFEM" />
-              <label for="POBFEM">Población Femenina</label>
+              <input type="checkbox" id="POBFEM" class="checkbox-hidden" />
+              <label for="POBFEM" class="custom-checkbox"></label>
+              <span>PoblaciÓN Femenina</span>
             </li>
             <li>
-              <input type="checkbox" id="P_0A2" />
-              <label for="P_0A2">Población de 0 a 2 años</label>
+              <input type="checkbox" id="P_0A2" class="checkbox-hidden"/>
+              <label for="P_0A2" class="custom-checkbox"></label>
+              <span>Población de 0 a 2 años</span>
             </li>
             <li>
-              <input type="checkbox" id="P_0A2_F" />
-              <label for="P_0A2_F">Población femenina de 0 a 2 años</label>
+              <input type="checkbox" id="P_0A2_F" class="checkbox-hidden"/>
+              <label for="P_0A2_F" class="custom-checkbox"></label>
+              <span>Población femenina de 0 a 2 años</span>
             </li>
             <li>
-              <input type="checkbox" id="P_0A2_M" />
-              <label for="P_0A2_M">Población masculina de 0 a 2 años</label>
+              <input type="checkbox" id="P_0A2_M" class="checkbox-hidden"/>
+              <label for="P_0A2_M" class="custom-checkbox"></label>
+              <span>Población masculina de 0 a 2 años</span>
             </li>
             <li>
-              <input type="checkbox" id="P_3YMAS" />
-              <label for="P_3YMAS">Población de 3 años y más</label>
+              <input type="checkbox" id="P_3YMAS" class="checkbox-hidden"/>
+              <label for="P_3YMAS" class="custom-checkbox"></label>
+              <span>Población de 3 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_3YMAS_F" />
-              <label for="P_3YMAS_F">Población femenina de 3 años y más</label>
+              <input type="checkbox" id="P_3YMAS_F"class="checkbox-hidden" />
+              <label for="P_3YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 3 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_3YMAS_M" />
-              <label for="P_3YMAS_M">Población masculina de 3 años y más</label>
+              <input type="checkbox" id="P_3YMAS_M"class="checkbox-hidden" />
+              <label for="P_3YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 3 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_5YMAS" />
-              <label for="P_5YMAS">Población de 5 años y más</label>
+              <input type="checkbox" id="P_5YMAS" class="checkbox-hidden"/>
+              <label for="P_5YMAS" class="custom-checkbox"></label>
+              <span>Población de 5 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_5YMAS_F" />
-              <label for="P_5YMAS_F">Población femenina de 5 años y más</label>
+              <input type="checkbox" id="P_5YMAS_F"class="checkbox-hidden" />
+              <label for="P_5YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 5 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_5YMAS_M" />
-              <label for="P_5YMAS_M">Población masculina de 5 años y más</label>
+              <input type="checkbox" id="P_5YMAS_M" class="checkbox-hidden"/>
+              <label for="P_5YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 5 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_12YMAS" />
-              <label for="P_12YMAS">Población de 12 años y más</label>
+              <input type="checkbox" id="P_12YMAS" class="checkbox-hidden"/>
+              <label for="P_12YMAS" class="custom-checkbox"></label>
+              <span>Población de 12 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_12YMAS_F" />
-              <label for="P_12YMAS_F"
-                >Población femenina de 12 años y más</label
-              >
+              <input type="checkbox" id="P_12YMAS_F" class="checkbox-hidden"/>
+              <label for="P_12YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 12 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_12YMAS_M" />
-              <label for="P_12YMAS_M"
-                >Población masculina de 12 años y más</label
-              >
+              <input type="checkbox" id="P_12YMAS_M" class="checkbox-hidden"/>
+              <label for="P_12YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 12 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_15YMAS" />
-              <label for="P_15YMAS">Población de 15 años y más</label>
+              <input type="checkbox" id="P_15YMAS" class="checkbox-hidden"/>
+              <label for="P_15YMAS" class="custom-checkbox"></label>
+              <span>Población de 15 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_15YMAS_F" />
-              <label for="P_15YMAS_F"
-                >Población femenina de 15 años y más</label
-              >
+              <input type="checkbox" id="P_15YMAS_F" class="checkbox-hidden"/>
+              <label for="P_15YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 15 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_15YMAS_M" />
-              <label for="P_15YMAS_M"
-                >Población masculina de 15 años y más</label
-              >
-            </li>
-
-            <li>
-              <input type="checkbox" id="P_18YMAS" />
-              <label for="P_18YMAS">Población de 18 años y más</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_18YMAS_F" />
-              <label for="P_18YMAS_F"
-                >Población femenina de 18 años y más</label
-              >
-            </li>
-            <li>
-              <input type="checkbox" id="P_18YMAS_M" />
-              <label for="P_18YMAS_M"
-                >Población masculina de 18 años y más</label
-              >
-            </li>
-            <li>
-              <input type="checkbox" id="P_3A5" />
-              <label for="P_3A5">Población de 3 a 5 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_3A5_F" />
-              <label for="P_3A5_F">Población femenina de 3 a 5 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_3A5_M" />
-              <label for="P_3A5_M">Población masculina de 3 a 5 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_6A11" />
-              <label for="P_6A11">Población de 6 a 11 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_6A11_F" />
-              <label for="P_6A11_F">Población femenina de 6 a 11 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_6A11_M" />
-              <label for="P_6A11_M">Población masculina de 6 a 11 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_8A14" />
-              <label for="P_8A14">Población de 8 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_8A14_F" />
-              <label for="P_8A14_F">Población femenina de 8 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_8A14_M" />
-              <label for="P_8A14_M">Población masculina de 8 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_12A14" />
-              <label for="P_12A14">Población de 12 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_12A14_F" />
-              <label for="P_12A14_F">Población femenina de 12 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_12A14_M" />
-              <label for="P_12A14_M">Població masculina de 12 a 14 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_15A17" />
-              <label for="P_15A17">Población de 15 a 17 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_15A17_F" />
-              <label for="P_15A17_F">Población femenina de 15 a 17 añoss</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_15A17_M" />
-              <label for="P_15A17_M">Población masculina de 15 a 17 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_18A24" />
-              <label for="P_18A24">Población de 18 a 24 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_18A24_F" />
-              <label for="P_18A24_F">Población femenina de 18 a 24 años</label>
-            </li>
-            <li>
-              <input type="checkbox" id="P_18A24_M" />
-              <label for="P_18A24_M">Población masculina de 18 a 24 años</label>
+              <input type="checkbox" id="P_15YMAS_M" class="checkbox-hidden"/>
+              <label for="P_15YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 15 años y más</span>
             </li>
 
             <li>
-              <input type="checkbox" id="P_15A49_F" />
-              <label for="P_15A49_F">Población femenina de 15 a 49 años</label>
+              <input type="checkbox" id="P_18YMAS"class="checkbox-hidden" />
+              <label for="P_18YMAS" class="custom-checkbox"></label>
+              <span>Población de 18 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_60YMAS" />
-              <label for="P_60YMAS">Población de 60 años y más</label>
+              <input type="checkbox" id="P_18YMAS_F" class="checkbox-hidden"/>
+              <label for="P_18YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 18 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_60YMAS_F" />
-              <label for="P_60YMAS_F"
-                >Población femenina de 60 años y más</label
-              >
+              <input type="checkbox" id="P_18YMAS_M" class="checkbox-hidden"/>
+              <label for="P_18YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 18 años y más</span>
             </li>
             <li>
-              <input type="checkbox" id="P_60YMAS_M" />
-              <label for="P_60YMAS_M"
-                >Población masculina de 60 años y más</label
-              >
+              <input type="checkbox" id="P_3A5" class="checkbox-hidden"/>
+              <label for="P_3A5" class="custom-checkbox"></label>
+              <span>Población de 3 a 5 años</span>
             </li>
             <li>
-              <input type="checkbox" id="REL_H_M" />
-              <label for="REL_H_M">Relación hombres-mujeres</label>
+              <input type="checkbox" id="P_3A5_F" class="checkbox-hidden"/>
+              <label for="P_3A5_F" class="custom-checkbox"></label>
+              <span>Población femenina de 3 a 5 años</span>
             </li>
             <li>
-              <input type="checkbox" id="POB0_14" />
-              <label for="POB0_14">Población de 0 a 14 años</label>
+              <input type="checkbox" id="P_3A5_M" class="checkbox-hidden"/>
+              <label for="P_3A5_M" class="custom-checkbox"></label>
+              <span>Población masculina de 3 a 5 años</span>
             </li>
             <li>
-              <input type="checkbox" id="POB15_64" />
-              <label for="POB15_64">Población de 15 a 64 años</label>
+              <input type="checkbox" id="P_6A11" class="checkbox-hidden"/>
+              <label for="P_6A11" class="custom-checkbox"></label>
+              <span>Población de 6 a 11 años></span>
             </li>
             <li>
-              <input type="checkbox" id="POB65_MAS" />
-              <label for="POB65_MAS">Población de 65 años y más </label>
+              <input type="checkbox" id="P_6A11_F" class="checkbox-hidden"/>
+              <label for="P_6A11_F" class="custom-checkbox"></label>
+              <span>Población femenina de 6 a 11 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_6A11_M" class="checkbox-hidden"/>
+              <label for="P_6A11_M" class="custom-checkbox"></label>
+              <span>Población masculina de 6 a 11 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_8A14" class="checkbox-hidden"/>
+              <label for="P_8A14" class="custom-checkbox"></label>
+              <span>Población de 8 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_8A14_F" class="checkbox-hidden"/>
+              <label for="P_8A14_F" class="custom-checkbox"></label>
+              <span>Población femenina de 8 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_8A14_M" class="checkbox-hidden"/>
+              <label for="P_8A14_M" class="custom-checkbox"></label>
+              <span>Población masculina de 8 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_12A14" class="checkbox-hidden"/>
+              <label for="P_12A14" class="custom-checkbox"></label>
+              <span>Población de 12 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_12A14_F" class="checkbox-hidden"/>
+              <label for="P_12A14_F" class="custom-checkbox"></label>
+              <span>Población femenina de 12 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_12A14_M" class="checkbox-hidden"/>
+              <label for="P_12A14_M" class="custom-checkbox"></label>
+              <span>Població masculina de 12 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_15A17" class="checkbox-hidden"/>
+              <label for="P_15A17" class="custom-checkbox"></label>
+              <span>Población de 15 a 17 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_15A17_F"class="checkbox-hidden" />
+              <label for="P_15A17_F" class="custom-checkbox"></label>
+              <span>Población femenina de 15 a 17 añoss</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_15A17_M"class="checkbox-hidden" />
+              <label for="P_15A17_M" class="custom-checkbox"></label>
+              <span>Población masculina de 15 a 17 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_18A24" class="checkbox-hidden"/>
+              <label for="P_18A24" class="custom-checkbox"></label>
+              <span>Población de 18 a 24 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_18A24_F" class="checkbox-hidden"/>
+              <label for="P_18A24_F" class="custom-checkbox"></label>
+              <span>Población femenina de 18 a 24 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_18A24_M"class="checkbox-hidden" />
+              <label for="P_18A24_M" class="custom-checkbox"></label>
+              <span>Población masculina de 18 a 24 años</span>
+            </li>
+
+            <li>
+              <input type="checkbox" id="P_15A49_F" class="checkbox-hidden"/>
+              <label for="P_15A49_F" class="custom-checkbox"></label>
+              <span>Población femenina de 15 a 49 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_60YMAS" class="checkbox-hidden"/>
+              <label for="P_60YMAS" class="custom-checkbox"></label>
+              <span>Población de 60 años y más</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_60YMAS_F"class="checkbox-hidden" />
+              <label for="P_60YMAS_F" class="custom-checkbox"></label>
+              <span>Población femenina de 60 años y más</span>
+            </li>
+            <li>
+              <input type="checkbox" id="P_60YMAS_M"class="checkbox-hidden" />
+              <label for="P_60YMAS_M" class="custom-checkbox"></label>
+              <span>Población masculina de 60 años y más</span>
+            </li>
+            <li>
+              <input type="checkbox" id="REL_H_M" class="checkbox-hidden"/>
+              <label for="REL_H_M" class="custom-checkbox"></label>
+              <span>Relación hombres-mujeres</span>
+            </li>
+            <li>
+              <input type="checkbox" id="POB0_14" class="checkbox-hidden"/>
+              <label for="POB0_14" class="custom-checkbox"></label>
+              <span>Población de 0 a 14 años</span>
+            </li>
+            <li>
+              <input type="checkbox" id="POB15_64" class="checkbox-hidden"/>
+              <label for="POB15_64" class="custom-checkbox"></label>
+              <span>Población de 15 a 64 años></span>
+            </li>
+            <li>
+              <input type="checkbox" id="POB65_MAS" class="checkbox-hidden"/>
+              <label for="POB65_MAS" class="custom-checkbox"> </label>
+              <span>Población de 65 años y más</span>
             </li>
           </ul>
         </div>
@@ -300,26 +333,6 @@
           </ul>
         </div>
 
-        <li>
-          <button
-            class="boton-mapa"
-            type="button"
-            id="mapa"
-            onclick="toggleDropdown2()"
-          >
-            Mapa
-          </button>
-
-          <!-- Menú desplegable de Opción 2 -->
-          <div id="dropdown2" class="dropdown2">
-            <ul>
-              <li>
-                <input type="checkbox" id="mapaAgeb" onchange="" />
-                <label for="mapa" class="ageb-text"> Agebs </label>
-              </li>
-            </ul>
-          </div>
-        </li>
       </ul>
     </div>
 
@@ -457,6 +470,24 @@
           }
         });
       }
+
+      document.getElementById('toggle-header-btn').addEventListener('click', function () {
+    var header = document.getElementById('main-header');
+    var button = this;
+    var currentHeight = header.clientHeight;
+
+    // Si la altura actual es 0, significa que ya está oculto, así que mostramos el encabezado.
+    if (currentHeight === 0) {
+        header.style.height = '60px'; // Cambiar al valor original o cualquier otro valor deseado.
+        this.classList.add('half-circle-btn'); // Agregar la clase para el estilo inicial
+        this.classList.remove('half-circle-btn2'); // Quitar la clase para el nuevo estilo
+        map.style.height = '690px'; //
+    } else {
+        header.style.height = '0'; // Ocultar el encabezado
+        this.classList.add('half-circle-btn2'); // Agregar la clase para el nuevo estilo
+        map.style.height = '100%'; // Ocultar el encabezado
+    }
+});
     </script>
     <script type="module">
       import { cambiarMapa } from "./assets/js/main.js";
