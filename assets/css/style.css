@@ -508,3 +508,70 @@ body, html {
     overflow-y: auto;
   }
 
+/* Estilo ventana modal */
+
+.titulo-modal {
+  margin-bottom: 15px;
+  text-align: center;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight:normal;
+  margin-top: -3px;
+}
+
+.titulo-modal span {
+  font-weight: bold;
+}
+
+.texto-modal {
+  font-size: 15px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight:lighter ;
+  padding-bottom: 15px;
+}
+  
+.dialogo-modal {
+  max-width: 650px;
+  border-radius: 25px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #ffffff;
+  border: none;
+}
+
+.dialogo-modal::backdrop {
+  background: rgba(0, 0, 0, 0.388);
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* Puedes ajustar este valor según sea necesario */
+}
+
+.btn-container button {
+  flex: 1; /* Asegura que ambos botones tengan el mismo ancho */
+}
+
+.btn-aceptar-modal {
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-size: 18px;
+}
+
+.btn-aceptar-modal:hover {
+  color: #095a89;
+}
+
+.btn-cerrar-modal {
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-size: 18px;
+}
+
+.btn-cerrar-modal:hover {
+  color: #095a89;
+}

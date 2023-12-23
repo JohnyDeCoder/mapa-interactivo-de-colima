@@ -11,7 +11,7 @@
       crossorigin=""
     />
     <!-- Link de archivo CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/print.css" />
     <!-- Libreria geocoder buscador -->
     <link
@@ -366,7 +366,20 @@
       </ul>
     </div> -->
 
-    <button id="generarReporte" class="circular-button-imprimir"></button>
+    <!-- <button id="generarReporte" class="circular-button-imprimir"></button> -->
+
+    <button class="circular-button-imprimir" onclick="window.modal.showModal();"></button>
+
+    <dialog class="dialogo-modal" id="modal">
+      <h2 class="titulo-modal">Hay <span>1 capa(s) activa(s).</span><br>
+        ¿Quieres generar el reporte?</h2>
+      <p class="texto-modal">Este proceso puede tardar un tiempo...</p>
+
+      <div class="btn-container">
+        <button class="btn-aceptar-modal" id="generarReporte" onclick="window.modal.close();">Sí</button>
+        <button class="btn-cerrar-modal" onclick="window.modal.close();">Cancelar</button>
+      </div>
+    </dialog>
 
     <div id="map"></div>
 
